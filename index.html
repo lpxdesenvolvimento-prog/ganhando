@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Ganhe Dinheiro - Anúncios Reais</title>
+    <title>Ganhe Dinheiro - App de Anúncios</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0a; }
@@ -54,7 +54,7 @@
 
 <script>
     // ============================================================
-    // BANCO DE DADOS
+    // BANCO DE DADOS (IndexedDB)
     // ============================================================
     
     let USUARIO_ATUAL = null;
@@ -220,7 +220,6 @@
         await salvarHistorico();
         renderizarConteudo();
         
-        // Efeito visual
         const saldoEl = document.getElementById('saldoValor');
         if (saldoEl) {
             saldoEl.classList.add('pulse');
@@ -230,31 +229,54 @@
     }
     
     // ============================================================
-    // ANÚNCIO REAL (Adsterra)
+    // ANÚNCIO (Simulado - substitua pelo Adsterra depois)
     // ============================================================
     
-    // O anúncio real da Adsterra já está no final do HTML
-    // O usuário vai ver um botão flutuante e ganhar dinheiro ao clicar
+    let anuncioAtivo = false;
+    let temporizadorAnuncio = null;
     
-    function assistirAnuncioAdsterra() {
-        // Informar ao usuário como funciona
-        alert('📺 Clique no botão flutuante que aparecer na tela!\n\nApós assistir, você ganhará R$ 0,10.');
+    function assistirAnuncio() {
+        if (anuncioAtivo) {
+            alert('Já tem um anúncio sendo exibido!');
+            return;
+        }
         
-        // O script da Adsterra já está rodando
-        // O usuário vai ver um anúncio pop-up ou banner
+        anuncioAtivo = true;
+        let segundos = 5;
+        
+        const modalHtml = `
+            <div class="modal" id="anuncioModal">
+                <div class="modal-content">
+                    <h3>📺 Assistindo Anúncio</h3>
+                    <div style="background: #2a2a3a; border-radius: 20px; padding: 30px; margin: 20px 0; text-align: center;">
+                        <div style="font-size: 50px;">🎬</div>
+                        <div style="margin-top: 10px;">Anúncio em vídeo</div>
+                        <div class="aviso" style="margin-top: 10px;">💰 Você ganhará R$ ${VALOR_POR_ANUNCIO.toFixed(2)} ao final</div>
+                        <div class="timer" id="timerAnuncio" style="margin-top: 15px; font-size: 18px; color: #ffd700;">Tempo: ${segundos}s</div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+        
+        temporizadorAnuncio = setInterval(() => {
+            segundos--;
+            const timerDiv = document.getElementById('timerAnuncio');
+            if (timerDiv) timerDiv.textContent = `Tempo: ${segundos}s`;
+            
+            if (segundos <= 0) {
+                clearInterval(temporizadorAnuncio);
+                fecharModal();
+                adicionarGanho(VALOR_POR_ANUNCIO);
+                alert(`✅ Você ganhou R$ ${VALOR_POR_ANUNCIO.toFixed(2)}!`);
+                anuncioAtivo = false;
+            }
+        }, 1000);
     }
     
-    // Função chamada quando o usuário completa o anúncio
-    // (Isso precisa ser integrado com o callback da Adsterra)
-    window.addEventListener('load', function() {
-        // Aguardar o script da Adsterra carregar
-        setTimeout(() => {
-            console.log('✅ Adsterra carregado - anúncios disponíveis');
-        }, 3000);
-    });
-    
     // ============================================================
-    // SAQUE PIX (Integração com Mercado Pago)
+    // SAQUE PIX (Simulado - gera QR Code para pagamento)
     // ============================================================
     
     function abrirModalSaque() {
@@ -273,7 +295,7 @@
                     <input type="text" id="nomeTitular" class="saque-input" placeholder="Seu nome completo">
                     <button class="btn-sacar" id="confirmarSaqueBtn">📤 Solicitar Saque</button>
                     <button class="login-btn btn-fechar" onclick="fecharModal()">Cancelar</button>
-                    <div style="font-size: 11px; color: #888; margin-top: 15px;">O saque será processado em até 24h úteis</div>
+                    <div style="font-size: 11px; color: #888; margin-top: 15px;">Após confirmar, você receberá o PIX em até 24h</div>
                 </div>
             </div>
         `;
@@ -310,7 +332,7 @@
             const novoSaldo = USUARIO_ATUAL.saldo - valor;
             await atualizarSaldo(USUARIO_ATUAL.id, novoSaldo);
             
-            // Registrar no histórico
+            // Registrar saque no histórico
             HISTORICO.unshift({
                 usuarioId: USUARIO_ATUAL.id,
                 tipo: 'saque',
@@ -325,22 +347,8 @@
             fecharModal();
             renderizarConteudo();
             
-            // Aqui você pode integrar com a API do Mercado Pago
-            // Exemplo de como seria a chamada:
-            /*
-            const response = await fetch('/api/saque-pix', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    valor: valor,
-                    chavePix: chave,
-                    nome: nome,
-                    email: USUARIO_ATUAL.email
-                })
-            });
-            */
-            
-            alert(`✅ Saque solicitado!\n\nValor: R$ ${valor.toFixed(2)}\nChave PIX: ${chave}\n\nO valor será enviado em até 24h.\n📧 Você receberá um comprovante por email.`);
+            // Exibir comprovante
+            alert(`✅ Saque solicitado com sucesso!\n\n📌 Valor: R$ ${valor.toFixed(2)}\n📌 Chave PIX: ${chave}\n📌 Nome: ${nome}\n\n⏳ O valor será enviado para sua conta em até 24h.\n📧 Você receberá um comprovante por email.`);
         };
     }
     
@@ -403,6 +411,8 @@
     }
     
     function fecharModal() {
+        if (temporizadorAnuncio) clearInterval(temporizadorAnuncio);
+        anuncioAtivo = false;
         document.querySelectorAll('.modal').forEach(m => m.remove());
     }
     
@@ -428,13 +438,14 @@
             </div>
             
             <div class="card" style="text-align: center;">
-                <h3>📺 Anúncios Disponíveis</h3>
-                <div class="anuncio-placeholder" style="background: #2a2a3a; border-radius: 20px; padding: 30px; margin: 15px 0;">
+                <h3>📺 Assistir Anúncio</h3>
+                <div style="background: #2a2a3a; border-radius: 20px; padding: 30px; margin: 15px 0;">
                     <div style="font-size: 50px;">🎬</div>
-                    <div style="margin: 10px 0;">Clique no botão flutuante que aparecer</div>
+                    <div style="margin: 10px 0;">Clique no botão abaixo</div>
                     <div class="ganho">💰 + ${formatarMoeda(VALOR_POR_ANUNCIO)} por anúncio</div>
                 </div>
-                <div class="aviso">💡 Os anúncios aparecem como um botão flutuante na tela. Clique e assista!</div>
+                <button class="btn-anuncio" onclick="assistirAnuncio()">📺 ASSISTIR ANÚNCIO AGORA</button>
+                <div class="aviso" style="margin-top: 15px;">💡 Anúncio de 5 segundos. Você ganha dinheiro real!</div>
             </div>
             
             <div class="card">
@@ -491,6 +502,7 @@
                                 <div style="font-weight: bold;">${h.tipo === 'anuncio' ? '📺 Assistiu anúncio' : '💸 Saque via PIX'}</div>
                                 <div style="font-size: 11px; color: #888;">${formatarData(h.data)}</div>
                                 ${h.chavePix ? `<div style="font-size: 10px; color: #666;">Chave: ${h.chavePix}</div>` : ''}
+                                ${h.status ? `<div style="font-size: 10px; color: #ffc107;">Status: ${h.status}</div>` : ''}
                             </div>
                             <div class="historico-valor">${h.valor > 0 ? '+' : ''}${formatarMoeda(h.valor)}</div>
                         </div>
@@ -590,11 +602,11 @@
     window.registrar = registrar;
     window.telaLogin = telaLogin;
     window.telaRegistro = telaRegistro;
+    window.assistirAnuncio = assistirAnuncio;
     window.abrirModalSaque = abrirModalSaque;
     window.mudarAba = mudarAba;
     window.logout = logout;
     window.fecharModal = fecharModal;
-    window.assistirAnuncioAdsterra = assistirAnuncioAdsterra;
     
     // ============================================================
     // INICIAR
@@ -607,15 +619,12 @@
         await carregarSessao();
         renderizarApp();
         console.log('🚀 App iniciado!');
-        console.log('📺 Anúncios Adsterra - aguarde o botão flutuante');
-        console.log('💸 Saque PIX - mínimo R$ 5,00');
+        console.log('💰 Cada anúncio vale R$ 0,10');
+        console.log('💸 Saque mínimo: R$ 5,00 via PIX');
     }
     
     iniciar();
 </script>
-
-<!-- ✅ SCRIPT DO ANÚNCIO ADSTERRA (ANÚNCIO REAL) -->
-<script src="https://pl29544299.effectivecpmnetwork.com/13/89/78/1389780ab59df29b5a18260e66775ac9.js"></script>
 
 </body>
 </html>
