@@ -276,81 +276,10 @@
     }
     
     // ============================================================
-    // INTEGRAÇÃO COM O BACKEND DO RAILWAY
+    // SAQUE PIX (Manual - Registra solicitação)
     // ============================================================
     
-    // 🔴 SUBSTITUA ESTA URL PELA URL DO SEU BACKEND NO RAILWAY 🔴
-    const BACKEND_URL = 'ganhando-production.up.railway.app';  // <--- COLOQUE A URL DO SEU RAILWAY AQUI!
-    
-    async function testarBackend() {
-        try {
-            const response = await fetch(`${BACKEND_URL}/api/teste`);
-            const data = await response.json();
-            console.log('✅ Backend conectado:', data);
-            return true;
-        } catch (error) {
-            console.error('❌ Backend offline:', error);
-            return false;
-        }
-    }
-    
-    async function solicitarSaquePIX_Backend(valor, nome, email, chavePix) {
-        try {
-            const response = await fetch(`${BACKEND_URL}/api/criar-pix`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    valor: valor,
-                    nome: nome,
-                    email: email,
-                    descricao: `Saque de R$ ${valor} do App Ganhe Dinheiro`,
-                    chavePix: chavePix
-                })
-            });
-            
-            const data = await response.json();
-            
-            if (data.success) {
-                mostrarQRCodePIX(data.qrCodeBase64, data.pixCopyPaste, valor);
-                return { success: true, data: data };
-            } else {
-                throw new Error(data.error);
-            }
-        } catch (error) {
-            console.error('Erro no saque:', error);
-            alert(`❌ Erro ao processar saque: ${error.message}`);
-            return { success: false, error: error.message };
-        }
-    }
-    
-    function mostrarQRCodePIX(qrCodeBase64, pixCode, valor) {
-        const modalHtml = `
-            <div class="modal" id="pixModal">
-                <div class="modal-content">
-                    <h3>💸 Pagamento PIX</h3>
-                    <div class="aviso">💰 Valor: R$ ${valor.toFixed(2)}</div>
-                    <div style="text-align: center; margin: 20px 0;">
-                        <img src="${qrCodeBase64}" style="width: 200px; height: 200px;">
-                    </div>
-                    <div style="background: #2a2a3a; padding: 10px; border-radius: 10px; margin: 10px 0;">
-                        <div style="font-size: 11px; word-break: break-all;">${pixCode}</div>
-                    </div>
-                    <button class="btn-sacar" onclick="copiarPIX('${pixCode}')">📋 Copiar código PIX</button>
-                    <button class="login-btn btn-fechar" onclick="fecharModal()">Fechar</button>
-                    <div class="aviso" style="margin-top: 15px;">⏳ Após pagar, seu saldo será atualizado</div>
-                </div>
-            </div>
-        `;
-        
-        document.body.insertAdjacentHTML('beforeend', modalHtml);
-    }
-    
-    function copiarPIX(codigo) {
-        navigator.clipboard.writeText(codigo);
-        alert('✅ Código PIX copiado!');
-    }
-    
-    async function abrirModalSaqueBackend() {
+    function abrirModalSaqueManual() {
         if (USUARIO_ATUAL.saldo < VALOR_MINIMO_SAQUE) {
             alert(`❌ Saldo mínimo para saque: R$ ${VALOR_MINIMO_SAQUE.toFixed(2)}\nSeu saldo: R$ ${USUARIO_ATUAL.saldo.toFixed(2)}`);
             return;
@@ -364,8 +293,9 @@
                     <input type="number" id="valorSaque" class="saque-input" placeholder="Valor para sacar" step="0.01" min="5" max="${USUARIO_ATUAL.saldo}">
                     <input type="text" id="chavePix" class="saque-input" placeholder="Chave PIX (CPF/Email/Telefone)">
                     <input type="text" id="nomeTitular" class="saque-input" placeholder="Seu nome completo">
-                    <button class="btn-sacar" id="confirmarSaqueBtn">📤 Gerar PIX</button>
+                    <button class="btn-sacar" id="confirmarSaqueBtn">📤 Solicitar Saque</button>
                     <button class="login-btn btn-fechar" onclick="fecharModal()">Cancelar</button>
+                    <div style="font-size: 11px; color: #888; margin-top: 15px;">Após confirmar, você receberá o PIX em até 24h</div>
                 </div>
             </div>
         `;
@@ -398,46 +328,31 @@
                 return;
             }
             
-            const btn = document.getElementById('confirmarSaqueBtn');
-            btn.disabled = true;
-            btn.textContent = '⏳ Processando...';
+            // Atualizar saldo
+            const novoSaldo = USUARIO_ATUAL.saldo - valor;
+            await atualizarSaldo(USUARIO_ATUAL.id, novoSaldo);
             
-            const resultado = await solicitarSaquePIX_Backend(valor, nome, USUARIO_ATUAL.email, chave);
+            // Registrar saque no histórico
+            HISTORICO.unshift({
+                usuarioId: USUARIO_ATUAL.id,
+                tipo: 'saque',
+                valor: -valor,
+                chavePix: chave,
+                nomeTitular: nome,
+                status: 'pendente',
+                data: new Date().toISOString()
+            });
+            await salvarHistorico();
             
-            if (resultado.success) {
-                const novoSaldo = USUARIO_ATUAL.saldo - valor;
-                await atualizarSaldo(USUARIO_ATUAL.id, novoSaldo);
-                
-                HISTORICO.unshift({
-                    usuarioId: USUARIO_ATUAL.id,
-                    tipo: 'saque',
-                    valor: -valor,
-                    chavePix: chave,
-                    nomeTitular: nome,
-                    paymentId: resultado.data.paymentId,
-                    status: 'processando',
-                    data: new Date().toISOString()
-                });
-                await salvarHistorico();
-                
-                fecharModal();
-                renderizarConteudo();
-            } else {
-                btn.disabled = false;
-                btn.textContent = '📤 Gerar PIX';
-            }
+            fecharModal();
+            renderizarConteudo();
+            
+            alert(`✅ Saque solicitado com sucesso!\n\n📌 Valor: R$ ${valor.toFixed(2)}\n📌 Chave PIX: ${chave}\n📌 Nome: ${nome}\n\n⏳ O valor será enviado para sua conta em até 24h.`);
         };
     }
     
-    async function verificarEConfigurarSaque() {
-        const backendOnline = await testarBackend();
-        if (backendOnline) {
-            console.log('🚀 Backend conectado! Usando saque automático PIX');
-            window.abrirModalSaque = abrirModalSaqueBackend;
-        } else {
-            console.log('⚠️ Backend offline, usando saque manual');
-        }
-    }
+    // Inicialmente usar saque manual
+    let abrirModalSaque = abrirModalSaqueManual;
     
     // ============================================================
     // REGISTRO / LOGIN
@@ -690,29 +605,28 @@
     window.telaLogin = telaLogin;
     window.telaRegistro = telaRegistro;
     window.assistirAnuncio = assistirAnuncio;
-    window.abrirModalSaque = abrirModalSaque;  // Será substituído se backend estiver online
     window.mudarAba = mudarAba;
     window.logout = logout;
     window.fecharModal = fecharModal;
-    window.copiarPIX = copiarPIX;
     
     // ============================================================
     // INICIAR
     // ============================================================
     
     async function iniciar() {
-        await abrirDB();
-        await carregarUsuarios();
-        await carregarHistorico();
-        await carregarSessao();
-        renderizarApp();
-        
-        // Verificar backend e configurar saque automático
-        await verificarEConfigurarSaque();
-        
-        console.log('🚀 App iniciado!');
-        console.log('💰 Cada anúncio vale R$ 0,10');
-        console.log('💸 Saque mínimo: R$ 5,00 via PIX');
+        try {
+            await abrirDB();
+            await carregarUsuarios();
+            await carregarHistorico();
+            await carregarSessao();
+            renderizarApp();
+            console.log('🚀 App iniciado!');
+            console.log('💰 Cada anúncio vale R$ 0,10');
+            console.log('💸 Saque mínimo: R$ 5,00 via PIX');
+        } catch (error) {
+            console.error('Erro ao iniciar app:', error);
+            document.getElementById('app').innerHTML = '<div style="text-align:center; padding:50px; color:white;">❌ Erro ao carregar app. Recarregue a página.</div>';
+        }
     }
     
     iniciar();
