@@ -1,25 +1,18 @@
-📱 COMO TESTAR:
+# 💰 Ganhe Dinheiro - App de Anúncios
 
-    Salve o código como ganhe_dinheiro.html
+Aplicativo para ganhar dinheiro assistindo anúncios com saque via PIX.
 
-    Abra no navegador (Chrome no celular)
+## 🚀 Como executar
 
-    Login: teste@email.com / 123456
+### Frontend (GitHub Pages)
+1. O app está disponível em: `https://seu-usuario.github.io/ganhando/`
 
-    Clique em "Assistir Anúncio"
+### Backend (Local ou Railway)
+```bash
+# Instalar dependências
+npm install
 
-    Aguarde 5 segundos e veja o saldo aumentar
+# Iniciar servidor
+npm start
 
-    Vá em Perfil e solicite saque via PIX
-
-💡 PRÓXIMOS PASSOS PARA VOCÊ:
-
-    Publicar como PWA (Progressive Web App) na Play Store
-
-    Integrar anúncios reais (Google AdMob)
-
-    Integrar PIX real (API do Banco do Brasil ou Mercado Pago)
-
-    Adicionar mais formas de ganhar (convite de amigos, tarefas diárias)
-
-Agora você tem um app funcional para ganhar dinheiro com anúncios! 🚀💰
+# Servidor rodando em http://localhost:3000
