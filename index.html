@@ -276,10 +276,10 @@
     }
     
     // ============================================================
-    // SAQUE PIX (Manual - Registra solicitação)
+    // SAQUE PIX (Manual)
     // ============================================================
     
-    function abrirModalSaqueManual() {
+    function abrirModalSaque() {
         if (USUARIO_ATUAL.saldo < VALOR_MINIMO_SAQUE) {
             alert(`❌ Saldo mínimo para saque: R$ ${VALOR_MINIMO_SAQUE.toFixed(2)}\nSeu saldo: R$ ${USUARIO_ATUAL.saldo.toFixed(2)}`);
             return;
@@ -350,9 +350,6 @@
             alert(`✅ Saque solicitado com sucesso!\n\n📌 Valor: R$ ${valor.toFixed(2)}\n📌 Chave PIX: ${chave}\n📌 Nome: ${nome}\n\n⏳ O valor será enviado para sua conta em até 24h.`);
         };
     }
-    
-    // Inicialmente usar saque manual
-    let abrirModalSaque = abrirModalSaqueManual;
     
     // ============================================================
     // REGISTRO / LOGIN
@@ -605,6 +602,7 @@
     window.telaLogin = telaLogin;
     window.telaRegistro = telaRegistro;
     window.assistirAnuncio = assistirAnuncio;
+    window.abrirModalSaque = abrirModalSaque;
     window.mudarAba = mudarAba;
     window.logout = logout;
     window.fecharModal = fecharModal;
@@ -621,11 +619,9 @@
             await carregarSessao();
             renderizarApp();
             console.log('🚀 App iniciado!');
-            console.log('💰 Cada anúncio vale R$ 0,10');
-            console.log('💸 Saque mínimo: R$ 5,00 via PIX');
         } catch (error) {
-            console.error('Erro ao iniciar app:', error);
-            document.getElementById('app').innerHTML = '<div style="text-align:center; padding:50px; color:white;">❌ Erro ao carregar app. Recarregue a página.</div>';
+            console.error('Erro:', error);
+            document.getElementById('app').innerHTML = '<div style="text-align:center; padding:50px; color:white;">❌ Erro ao carregar. Recarregue a página.</div>';
         }
     }
     
