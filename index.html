@@ -229,7 +229,7 @@
     }
     
     // ============================================================
-    // ANÚNCIO (Simulado - substitua pelo Adsterra depois)
+    // ANÚNCIO SIMULADO
     // ============================================================
     
     let anuncioAtivo = false;
@@ -276,7 +276,7 @@
     }
     
     // ============================================================
-    // SAQUE PIX (Simulado - gera QR Code para pagamento)
+    // SAQUE PIX (Manual - Registra solicitação)
     // ============================================================
     
     function abrirModalSaque() {
@@ -347,8 +347,7 @@
             fecharModal();
             renderizarConteudo();
             
-            // Exibir comprovante
-            alert(`✅ Saque solicitado com sucesso!\n\n📌 Valor: R$ ${valor.toFixed(2)}\n📌 Chave PIX: ${chave}\n📌 Nome: ${nome}\n\n⏳ O valor será enviado para sua conta em até 24h.\n📧 Você receberá um comprovante por email.`);
+            alert(`✅ Saque solicitado com sucesso!\n\n📌 Valor: R$ ${valor.toFixed(2)}\n📌 Chave PIX: ${chave}\n📌 Nome: ${nome}\n\n⏳ O valor será enviado para sua conta em até 24h.`);
         };
     }
     
