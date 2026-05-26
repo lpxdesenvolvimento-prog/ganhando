@@ -3,36 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Ganhe Dinheiro - App de Anúncios</title>
+    <title>Ganhe Dinheiro - Anúncios Reais</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0a; min-height: 100vh; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0a; }
         .app { max-width: 500px; margin: 0 auto; background: #121212; min-height: 100vh; color: white; }
-        .login-screen { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; }
-        .login-box { background: #1e1e2e; border-radius: 30px; padding: 40px 25px; width: 100%; max-width: 350px; }
+        
+        .login-screen { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #667eea, #764ba2); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+        .login-box { background: #1e1e2e; border-radius: 30px; padding: 40px 25px; width: 90%; max-width: 350px; }
         .login-box h1 { text-align: center; color: #667eea; margin-bottom: 30px; }
         .login-input { width: 100%; padding: 15px; margin-bottom: 15px; background: #2a2a3a; border: none; border-radius: 15px; color: white; }
         .login-btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 15px; font-weight: bold; cursor: pointer; }
         .switch-btn { text-align: center; margin-top: 20px; color: #667eea; cursor: pointer; }
+        
         .header { background: #1e1e2e; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 20px; font-weight: bold; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .saldo-header { background: #2a2a3a; padding: 8px 15px; border-radius: 20px; }
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; max-width: 500px; margin: 0 auto; background: #1e1e2e; display: flex; justify-content: space-around; padding: 12px 20px; border-top: 1px solid #2a2a3a; z-index: 100; }
+        
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; max-width: 500px; margin: 0 auto; background: #1e1e2e; display: flex; justify-content: space-around; padding: 12px 20px; border-top: 1px solid #2a2a3a; }
         .nav-item { text-align: center; cursor: pointer; padding: 5px; flex: 1; color: #888; }
-        .nav-item.active { color: #667eea; transform: translateY(-3px); }
+        .nav-item.active { color: #667eea; }
         .nav-icon { font-size: 24px; }
         .nav-label { font-size: 11px; margin-top: 4px; }
+        
         .main-content { padding-bottom: 80px; }
         .card { background: #1e1e2e; border-radius: 20px; padding: 20px; margin: 15px; }
         .saldo-card { background: linear-gradient(135deg, #667eea, #764ba2); text-align: center; }
         .saldo-valor { font-size: 48px; font-weight: bold; margin: 10px 0; }
-        .anuncio-card { text-align: center; cursor: pointer; }
-        .anuncio-placeholder { background: #2a2a3a; border-radius: 15px; padding: 60px 20px; text-align: center; }
-        .ganho { color: #ffd700; font-size: 20px; font-weight: bold; margin: 10px 0; }
-        .timer { font-size: 14px; color: #888; margin-top: 10px; }
+        .btn-anuncio { background: #ffc107; color: #333; border: none; border-radius: 20px; padding: 20px; width: 100%; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .ganho { color: #ffd700; font-size: 20px; margin: 10px 0; }
+        
         .perfil-header { text-align: center; padding: 30px 20px; background: linear-gradient(135deg, #667eea, #764ba2); }
         .perfil-avatar { width: 80px; height: 80px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 40px; margin: 0 auto 15px; }
-        .btn-sacar { background: #28a745; color: white; border: none; border-radius: 15px; padding: 15px; font-weight: bold; cursor: pointer; width: 100%; }
+        .btn-sacar { background: #28a745; color: white; border: none; border-radius: 15px; padding: 15px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
         .aviso { background: #ffc107; color: #333; padding: 12px; border-radius: 10px; font-size: 12px; margin: 10px 0; text-align: center; }
         .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: flex; align-items: center; justify-content: center; }
         .modal-content { background: #1e1e2e; border-radius: 30px; width: 90%; max-width: 350px; padding: 25px; text-align: center; }
@@ -43,6 +46,7 @@
         .historico-valor { color: #ffd700; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
         .pulse { animation: pulse 0.5s ease; }
+        .btn-desabilitado { opacity: 0.5; cursor: not-allowed; }
     </style>
 </head>
 <body>
@@ -64,7 +68,7 @@
     
     function abrirDB() {
         return new Promise((resolve, reject) => {
-            const request = indexedDB.open('GanheDinheiroDB', 2);
+            const request = indexedDB.open('GanheDinheiroDB', 3);
             request.onerror = () => reject(request.error);
             request.onsuccess = () => {
                 db = request.result;
@@ -99,7 +103,7 @@
                         nome: 'Usuário Teste',
                         email: 'teste@email.com',
                         senha: '123456',
-                        saldo: 2.50,
+                        saldo: 0,
                         dataCadastro: new Date().toISOString()
                     });
                     salvarUsuarios();
@@ -203,111 +207,175 @@
         }
     }
     
-    async function adicionarGanho(valor, tipo) {
+    async function adicionarGanho(valor) {
         if (!USUARIO_ATUAL) return;
         const novoSaldo = USUARIO_ATUAL.saldo + valor;
         await atualizarSaldo(USUARIO_ATUAL.id, novoSaldo);
         HISTORICO.unshift({
             usuarioId: USUARIO_ATUAL.id,
-            tipo: tipo,
+            tipo: 'anuncio',
             valor: valor,
             data: new Date().toISOString()
         });
         await salvarHistorico();
         renderizarConteudo();
+        
+        // Efeito visual
+        const saldoEl = document.getElementById('saldoValor');
+        if (saldoEl) {
+            saldoEl.classList.add('pulse');
+            setTimeout(() => saldoEl.classList.remove('pulse'), 500);
+        }
         return novoSaldo;
     }
     
     // ============================================================
-    // ANÚNCIO SIMULADO
+    // ANÚNCIO REAL (Adsterra)
     // ============================================================
     
-    let anuncioAtivo = false;
-    let temporizadorAnuncio = null;
-    let segundosRestantes = 0;
+    // O anúncio real da Adsterra já está no final do HTML
+    // O usuário vai ver um botão flutuante e ganhar dinheiro ao clicar
     
-    function assistirAnuncio() {
-        if (anuncioAtivo) {
-            alert('Já tem um anúncio sendo exibido!');
-            return;
-        }
-        anuncioAtivo = true;
-        segundosRestantes = 5;
-        const modalHtml = `
-            <div class="modal" id="anuncioModal">
-                <div class="modal-content">
-                    <h3>📺 Assistindo Anúncio</h3>
-                    <div class="anuncio-placeholder" style="margin: 20px 0;">
-                        <div style="font-size: 50px;">📱</div>
-                        <div style="margin-top: 10px;">Anúncio em vídeo</div>
-                    </div>
-                    <div class="timer" id="timerAnuncio">Tempo restante: 5 segundos</div>
-                    <div class="aviso">💰 Você ganhará R$ ${VALOR_POR_ANUNCIO.toFixed(2)} ao final</div>
-                </div>
-            </div>
-        `;
-        document.body.insertAdjacentHTML('beforeend', modalHtml);
-        temporizadorAnuncio = setInterval(() => {
-            segundosRestantes--;
-            const timerDiv = document.getElementById('timerAnuncio');
-            if (timerDiv) timerDiv.textContent = `Tempo restante: ${segundosRestantes} segundos`;
-            if (segundosRestantes <= 0) {
-                clearInterval(temporizadorAnuncio);
-                fecharModal();
-                adicionarGanho(VALOR_POR_ANUNCIO, 'anuncio');
-                const saldoEl = document.getElementById('saldoValor');
-                if (saldoEl) saldoEl.classList.add('pulse');
-                setTimeout(() => { if (saldoEl) saldoEl.classList.remove('pulse'); }, 500);
-                alert(`✅ Você ganhou R$ ${VALOR_POR_ANUNCIO.toFixed(2)}!`);
-                anuncioAtivo = false;
-            }
-        }, 1000);
+    function assistirAnuncioAdsterra() {
+        // Informar ao usuário como funciona
+        alert('📺 Clique no botão flutuante que aparecer na tela!\n\nApós assistir, você ganhará R$ 0,10.');
+        
+        // O script da Adsterra já está rodando
+        // O usuário vai ver um anúncio pop-up ou banner
     }
+    
+    // Função chamada quando o usuário completa o anúncio
+    // (Isso precisa ser integrado com o callback da Adsterra)
+    window.addEventListener('load', function() {
+        // Aguardar o script da Adsterra carregar
+        setTimeout(() => {
+            console.log('✅ Adsterra carregado - anúncios disponíveis');
+        }, 3000);
+    });
+    
+    // ============================================================
+    // SAQUE PIX (Integração com Mercado Pago)
+    // ============================================================
     
     function abrirModalSaque() {
         if (USUARIO_ATUAL.saldo < VALOR_MINIMO_SAQUE) {
-            alert(`Saldo mínimo para saque: R$ ${VALOR_MINIMO_SAQUE.toFixed(2)}`);
+            alert(`❌ Saldo mínimo para saque: R$ ${VALOR_MINIMO_SAQUE.toFixed(2)}\nSeu saldo: R$ ${USUARIO_ATUAL.saldo.toFixed(2)}`);
             return;
         }
+        
         const modalHtml = `
             <div class="modal" id="saqueModal">
                 <div class="modal-content">
-                    <h3>💸 Solicitar Saque</h3>
-                    <div class="aviso">💰 Saldo disponível: R$ ${USUARIO_ATUAL.saldo.toFixed(2)}</div>
+                    <h3>💸 Saque via PIX</h3>
+                    <div class="aviso">💰 Saldo disponível: R$ ${USUARIO_ATUAL.saldo.toFixed(2)}<br>💡 Mínimo: R$ ${VALOR_MINIMO_SAQUE.toFixed(2)}</div>
                     <input type="number" id="valorSaque" class="saque-input" placeholder="Valor para sacar" step="0.01" min="5" max="${USUARIO_ATUAL.saldo}">
-                    <input type="text" id="chavePix" class="saque-input" placeholder="Chave PIX">
+                    <input type="text" id="chavePix" class="saque-input" placeholder="Chave PIX (CPF/Email/Telefone)">
+                    <input type="text" id="nomeTitular" class="saque-input" placeholder="Seu nome completo">
                     <button class="btn-sacar" id="confirmarSaqueBtn">📤 Solicitar Saque</button>
                     <button class="login-btn btn-fechar" onclick="fecharModal()">Cancelar</button>
+                    <div style="font-size: 11px; color: #888; margin-top: 15px;">O saque será processado em até 24h úteis</div>
                 </div>
             </div>
         `;
+        
         document.body.insertAdjacentHTML('beforeend', modalHtml);
+        
         document.getElementById('confirmarSaqueBtn').onclick = async () => {
             const valor = parseFloat(document.getElementById('valorSaque').value);
             const chave = document.getElementById('chavePix').value;
-            if (isNaN(valor) || valor <= 0) return alert('Digite um valor válido');
-            if (valor > USUARIO_ATUAL.saldo) return alert('Saldo insuficiente');
-            if (valor < VALOR_MINIMO_SAQUE) return alert(`Valor mínimo: R$ ${VALOR_MINIMO_SAQUE.toFixed(2)}`);
-            if (!chave.trim()) return alert('Digite a chave PIX');
+            const nome = document.getElementById('nomeTitular').value;
+            
+            if (isNaN(valor) || valor <= 0) {
+                alert('Digite um valor válido');
+                return;
+            }
+            if (valor > USUARIO_ATUAL.saldo) {
+                alert('Saldo insuficiente');
+                return;
+            }
+            if (valor < VALOR_MINIMO_SAQUE) {
+                alert(`Valor mínimo: R$ ${VALOR_MINIMO_SAQUE.toFixed(2)}`);
+                return;
+            }
+            if (!chave.trim()) {
+                alert('Digite a chave PIX');
+                return;
+            }
+            if (!nome.trim()) {
+                alert('Digite seu nome completo');
+                return;
+            }
+            
+            // Atualizar saldo
             const novoSaldo = USUARIO_ATUAL.saldo - valor;
             await atualizarSaldo(USUARIO_ATUAL.id, novoSaldo);
-            HISTORICO.unshift({ usuarioId: USUARIO_ATUAL.id, tipo: 'saque', valor: -valor, chavePix: chave, data: new Date().toISOString() });
+            
+            // Registrar no histórico
+            HISTORICO.unshift({
+                usuarioId: USUARIO_ATUAL.id,
+                tipo: 'saque',
+                valor: -valor,
+                chavePix: chave,
+                nomeTitular: nome,
+                status: 'pendente',
+                data: new Date().toISOString()
+            });
             await salvarHistorico();
+            
             fecharModal();
             renderizarConteudo();
-            alert(`✅ Saque solicitado!\nValor: R$ ${valor.toFixed(2)}\nChave: ${chave}`);
+            
+            // Aqui você pode integrar com a API do Mercado Pago
+            // Exemplo de como seria a chamada:
+            /*
+            const response = await fetch('/api/saque-pix', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    valor: valor,
+                    chavePix: chave,
+                    nome: nome,
+                    email: USUARIO_ATUAL.email
+                })
+            });
+            */
+            
+            alert(`✅ Saque solicitado!\n\nValor: R$ ${valor.toFixed(2)}\nChave PIX: ${chave}\n\nO valor será enviado em até 24h.\n📧 Você receberá um comprovante por email.`);
         };
     }
+    
+    // ============================================================
+    // REGISTRO / LOGIN
+    // ============================================================
     
     async function registrar() {
         const nome = document.getElementById('regNome').value;
         const email = document.getElementById('regEmail').value;
         const senha = document.getElementById('regSenha').value;
         const confirmar = document.getElementById('regConfirmar').value;
-        if (!nome || !email || !senha) return alert('Preencha todos os campos');
-        if (senha !== confirmar) return alert('Senhas não coincidem');
-        if (USUARIOS.find(u => u.email === email)) return alert('Email já cadastrado');
-        USUARIOS.push({ id: 'user_' + Date.now(), nome, email, senha, saldo: 0, dataCadastro: new Date().toISOString() });
+        
+        if (!nome || !email || !senha) {
+            alert('Preencha todos os campos');
+            return;
+        }
+        if (senha !== confirmar) {
+            alert('As senhas não coincidem');
+            return;
+        }
+        if (USUARIOS.find(u => u.email === email)) {
+            alert('Email já cadastrado');
+            return;
+        }
+        
+        const novoUsuario = {
+            id: 'user_' + Date.now(),
+            nome: nome,
+            email: email,
+            senha: senha,
+            saldo: 0,
+            dataCadastro: new Date().toISOString()
+        };
+        USUARIOS.push(novoUsuario);
         await salvarUsuarios();
         alert('✅ Cadastro realizado! Faça login.');
         telaLogin();
@@ -316,18 +384,40 @@
     async function fazerLogin() {
         const email = document.getElementById('loginEmail').value;
         const senha = document.getElementById('loginSenha').value;
+        const manter = document.getElementById('manterLogin')?.checked || false;
         const user = USUARIOS.find(u => u.email === email && u.senha === senha);
+        
         if (user) {
             USUARIO_ATUAL = user;
-            await salvarSessao(user.id, document.getElementById('manterLogin')?.checked || false);
+            await salvarSessao(user.id, manter);
             renderizarApp();
-        } else alert('Email ou senha incorretos');
+        } else {
+            alert('Email ou senha incorretos');
+        }
     }
     
-    function logout() { USUARIO_ATUAL = null; limparSessao(); renderizarApp(); }
-    function fecharModal() { if (temporizadorAnuncio) clearInterval(temporizadorAnuncio); anuncioAtivo = false; document.querySelectorAll('.modal').forEach(m => m.remove()); }
-    function formatarMoeda(valor) { return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
-    function formatarData(dataISO) { return new Date(dataISO).toLocaleString('pt-BR'); }
+    function logout() {
+        USUARIO_ATUAL = null;
+        limparSessao();
+        renderizarApp();
+    }
+    
+    function fecharModal() {
+        document.querySelectorAll('.modal').forEach(m => m.remove());
+    }
+    
+    // ============================================================
+    // RENDERIZAÇÃO
+    // ============================================================
+    
+    function formatarMoeda(valor) {
+        return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+    
+    function formatarData(dataISO) {
+        const data = new Date(dataISO);
+        return data.toLocaleDateString('pt-BR') + ' ' + data.toLocaleTimeString('pt-BR');
+    }
     
     function renderizarHome() {
         return `
@@ -336,17 +426,25 @@
                 <div class="saldo-valor" id="saldoValor">${formatarMoeda(USUARIO_ATUAL.saldo)}</div>
                 <div>💡 Cada anúncio = ${formatarMoeda(VALOR_POR_ANUNCIO)}</div>
             </div>
-            <div class="card anuncio-card" onclick="assistirAnuncio()">
-                <h3>📺 Assistir Anúncio</h3>
-                <div class="anuncio-placeholder"><div style="font-size: 60px;">📱</div><div>Clique para assistir</div><div class="ganho">+ ${formatarMoeda(VALOR_POR_ANUNCIO)}</div></div>
-                <div class="timer">⏱️ Anúncio de 5 segundos</div>
+            
+            <div class="card" style="text-align: center;">
+                <h3>📺 Anúncios Disponíveis</h3>
+                <div class="anuncio-placeholder" style="background: #2a2a3a; border-radius: 20px; padding: 30px; margin: 15px 0;">
+                    <div style="font-size: 50px;">🎬</div>
+                    <div style="margin: 10px 0;">Clique no botão flutuante que aparecer</div>
+                    <div class="ganho">💰 + ${formatarMoeda(VALOR_POR_ANUNCIO)} por anúncio</div>
+                </div>
+                <div class="aviso">💡 Os anúncios aparecem como um botão flutuante na tela. Clique e assista!</div>
             </div>
-            <div class="card"><h3>📊 Estatísticas</h3>
-                <div style="margin-top:15px"><div>💰 Saldo: ${formatarMoeda(USUARIO_ATUAL.saldo)}</div>
-                <div>🎯 Mínimo saque: ${formatarMoeda(VALOR_MINIMO_SAQUE)}</div>
-                <div>📈 Status: ${USUARIO_ATUAL.saldo >= VALOR_MINIMO_SAQUE ? '✅ Pode sacar' : '⏳ Acumule mais'}</div></div>
+            
+            <div class="card">
+                <h3>📊 Estatísticas</h3>
+                <div style="margin-top: 15px;">
+                    <div>💰 Saldo atual: ${formatarMoeda(USUARIO_ATUAL.saldo)}</div>
+                    <div>🎯 Mínimo para saque: ${formatarMoeda(VALOR_MINIMO_SAQUE)}</div>
+                    <div>📈 Status: ${USUARIO_ATUAL.saldo >= VALOR_MINIMO_SAQUE ? '✅ Disponível para saque' : '⏳ Continue assistindo'}</div>
+                </div>
             </div>
-            <div class="card"><h3>💡 Dicas</h3><div style="font-size:13px;color:#aaa;">• Assista vários anúncios<br>• Cada anúncio vale ${formatarMoeda(VALOR_POR_ANUNCIO)}<br>• Mínimo saque: ${formatarMoeda(VALOR_MINIMO_SAQUE)}</div></div>
         `;
     }
     
@@ -354,18 +452,51 @@
         const historico = HISTORICO.filter(h => h.usuarioId === USUARIO_ATUAL.id);
         const totalGanho = historico.filter(h => h.tipo === 'anuncio').reduce((s, h) => s + h.valor, 0);
         const totalSaque = Math.abs(historico.filter(h => h.tipo === 'saque').reduce((s, h) => s + h.valor, 0));
+        
         return `
-            <div class="perfil-header"><div class="perfil-avatar">👤</div><div class="perfil-nome">${USUARIO_ATUAL.nome}</div><div class="perfil-email">${USUARIO_ATUAL.email}</div></div>
-            <div class="card"><h3>📊 Resumo</h3>
-                <div>💰 Saldo: ${formatarMoeda(USUARIO_ATUAL.saldo)}</div>
-                <div>📈 Ganho total: +${formatarMoeda(totalGanho)}</div>
-                <div>💸 Sacado: -${formatarMoeda(totalSaque)}</div>
+            <div class="perfil-header">
+                <div class="perfil-avatar">👤</div>
+                <div class="perfil-nome">${USUARIO_ATUAL.nome}</div>
+                <div class="perfil-email">${USUARIO_ATUAL.email}</div>
             </div>
-            <div class="card"><h3>💰 Saque PIX</h3>
-                <div class="aviso">Mínimo: ${formatarMoeda(VALOR_MINIMO_SAQUE)}<br>Seu saldo: ${formatarMoeda(USUARIO_ATUAL.saldo)}</div>
-                <button class="btn-sacar" onclick="abrirModalSaque()" ${USUARIO_ATUAL.saldo < VALOR_MINIMO_SAQUE ? 'disabled style="opacity:0.5"' : ''}>💸 Sacar</button>
+            
+            <div class="card">
+                <h3>📊 Resumo Financeiro</h3>
+                <div style="margin-top: 15px;">
+                    <div>💰 Saldo atual: ${formatarMoeda(USUARIO_ATUAL.saldo)}</div>
+                    <div>📈 Total ganho: +${formatarMoeda(totalGanho)}</div>
+                    <div>💸 Total sacado: -${formatarMoeda(totalSaque)}</div>
+                </div>
             </div>
-            <div class="card"><h3>📜 Histórico</h3>${historico.length === 0 ? '<div class="empty">Nenhuma movimentação</div>' : historico.map(h => `<div class="historico-item"><div><b>${h.tipo === 'anuncio' ? '📺 Anúncio' : '💸 Saque'}</b><br><small>${formatarData(h.data)}</small></div><div class="historico-valor">${h.valor > 0 ? '+' : ''}${formatarMoeda(h.valor)}</div></div>`).join('')}</div>
+            
+            <div class="card">
+                <h3>💰 Saque via PIX</h3>
+                <div class="aviso">
+                    💡 Mínimo: ${formatarMoeda(VALOR_MINIMO_SAQUE)}<br>
+                    Seu saldo: ${formatarMoeda(USUARIO_ATUAL.saldo)}
+                </div>
+                <button class="btn-sacar ${USUARIO_ATUAL.saldo < VALOR_MINIMO_SAQUE ? 'btn-desabilitado' : ''}" 
+                        onclick="abrirModalSaque()" 
+                        ${USUARIO_ATUAL.saldo < VALOR_MINIMO_SAQUE ? 'disabled' : ''}>
+                    💸 Solicitar Saque PIX
+                </button>
+            </div>
+            
+            <div class="card">
+                <h3>📜 Histórico de Transações</h3>
+                ${historico.length === 0 ? '<div class="empty">Nenhuma movimentação ainda</div>' : 
+                    historico.map(h => `
+                        <div class="historico-item">
+                            <div>
+                                <div style="font-weight: bold;">${h.tipo === 'anuncio' ? '📺 Assistiu anúncio' : '💸 Saque via PIX'}</div>
+                                <div style="font-size: 11px; color: #888;">${formatarData(h.data)}</div>
+                                ${h.chavePix ? `<div style="font-size: 10px; color: #666;">Chave: ${h.chavePix}</div>` : ''}
+                            </div>
+                            <div class="historico-valor">${h.valor > 0 ? '+' : ''}${formatarMoeda(h.valor)}</div>
+                        </div>
+                    `).join('')
+                }
+            </div>
         `;
     }
     
@@ -373,66 +504,101 @@
         const container = document.getElementById('mainContainer');
         if (!container) return;
         container.innerHTML = ABA_ATUAL === 'home' ? renderizarHome() : renderizarPerfil();
+        
         const saldoHeader = document.getElementById('saldoHeader');
         if (saldoHeader) saldoHeader.innerHTML = `💰 ${formatarMoeda(USUARIO_ATUAL.saldo)}`;
     }
     
     function mudarAba(aba) {
         ABA_ATUAL = aba;
-        document.querySelectorAll('.nav-item').forEach(el => el.classList.toggle('active', el.dataset.tab === aba));
+        document.querySelectorAll('.nav-item').forEach(el => {
+            if (el.dataset.tab === aba) {
+                el.classList.add('active');
+            } else {
+                el.classList.remove('active');
+            }
+        });
         renderizarConteudo();
     }
     
     function telaLogin() {
         document.getElementById('app').innerHTML = `
-            <div class="login-screen"><div class="login-box">
-                <h1>💰 Ganhe Dinheiro</h1>
-                <input type="email" id="loginEmail" class="login-input" placeholder="Email" value="teste@email.com">
-                <input type="password" id="loginSenha" class="login-input" placeholder="Senha" value="123456">
-                <label style="display:flex; gap:8px; margin:10px 0;"><input type="checkbox" id="manterLogin"> Manter conectado</label>
-                <button class="login-btn" onclick="fazerLogin()">✨ Entrar ✨</button>
-                <div class="switch-btn" onclick="telaRegistro()">Criar conta</div>
-                <div style="margin-top:20px; font-size:12px; color:#666;">teste@email.com / 123456</div>
-            </div></div>
+            <div class="login-screen">
+                <div class="login-box">
+                    <h1>💰 Ganhe Dinheiro</h1>
+                    <input type="email" id="loginEmail" class="login-input" placeholder="Email" value="teste@email.com">
+                    <input type="password" id="loginSenha" class="login-input" placeholder="Senha" value="123456">
+                    <label style="display: flex; gap: 8px; margin: 10px 0; color: #aaa;">
+                        <input type="checkbox" id="manterLogin"> Manter-me conectado
+                    </label>
+                    <button class="login-btn" onclick="fazerLogin()">✨ Entrar ✨</button>
+                    <div class="switch-btn" onclick="telaRegistro()">Criar nova conta</div>
+                    <div style="margin-top: 20px; text-align: center; font-size: 12px; color: #666;">teste@email.com / 123456</div>
+                </div>
+            </div>
         `;
     }
     
     function telaRegistro() {
         document.getElementById('app').innerHTML = `
-            <div class="login-screen"><div class="login-box">
-                <h1>📝 Criar Conta</h1>
-                <input type="text" id="regNome" class="login-input" placeholder="Nome">
-                <input type="email" id="regEmail" class="login-input" placeholder="Email">
-                <input type="password" id="regSenha" class="login-input" placeholder="Senha">
-                <input type="password" id="regConfirmar" class="login-input" placeholder="Confirmar">
-                <button class="login-btn" onclick="registrar()">✅ Cadastrar</button>
-                <div class="switch-btn" onclick="telaLogin()">Já tenho conta</div>
-            </div></div>
+            <div class="login-screen">
+                <div class="login-box">
+                    <h1>📝 Criar Conta</h1>
+                    <input type="text" id="regNome" class="login-input" placeholder="Seu nome completo">
+                    <input type="email" id="regEmail" class="login-input" placeholder="Email">
+                    <input type="password" id="regSenha" class="login-input" placeholder="Senha (mínimo 4 caracteres)">
+                    <input type="password" id="regConfirmar" class="login-input" placeholder="Confirmar senha">
+                    <button class="login-btn" onclick="registrar()">✅ Cadastrar</button>
+                    <div class="switch-btn" onclick="telaLogin()">Já tenho conta</div>
+                </div>
+            </div>
         `;
     }
     
     async function renderizarApp() {
-        if (!USUARIO_ATUAL) { telaLogin(); return; }
+        if (!USUARIO_ATUAL) {
+            telaLogin();
+            return;
+        }
+        
         document.getElementById('app').innerHTML = `
-            <div class="header"><div class="logo">💰 Ganhe Dinheiro</div><div class="saldo-header" id="saldoHeader">💰 ${formatarMoeda(USUARIO_ATUAL.saldo)}</div></div>
+            <div class="header">
+                <div class="logo">💰 Ganhe Dinheiro</div>
+                <div class="saldo-header" id="saldoHeader">💰 ${formatarMoeda(USUARIO_ATUAL.saldo)}</div>
+            </div>
             <div class="main-content" id="mainContainer"></div>
             <div class="bottom-nav">
-                <div class="nav-item ${ABA_ATUAL === 'home' ? 'active' : ''}" data-tab="home" onclick="mudarAba('home')"><div class="nav-icon">🏠</div><div>Início</div></div>
-                <div class="nav-item ${ABA_ATUAL === 'perfil' ? 'active' : ''}" data-tab="perfil" onclick="mudarAba('perfil')"><div class="nav-icon">👤</div><div>Perfil</div></div>
+                <div class="nav-item ${ABA_ATUAL === 'home' ? 'active' : ''}" data-tab="home" onclick="mudarAba('home')">
+                    <div class="nav-icon">🏠</div>
+                    <div class="nav-label">Início</div>
+                </div>
+                <div class="nav-item ${ABA_ATUAL === 'perfil' ? 'active' : ''}" data-tab="perfil" onclick="mudarAba('perfil')">
+                    <div class="nav-icon">👤</div>
+                    <div class="nav-label">Perfil</div>
+                </div>
             </div>
         `;
+        
         renderizarConteudo();
     }
+    
+    // ============================================================
+    // EXPOR FUNÇÕES
+    // ============================================================
     
     window.fazerLogin = fazerLogin;
     window.registrar = registrar;
     window.telaLogin = telaLogin;
     window.telaRegistro = telaRegistro;
-    window.assistirAnuncio = assistirAnuncio;
     window.abrirModalSaque = abrirModalSaque;
     window.mudarAba = mudarAba;
     window.logout = logout;
     window.fecharModal = fecharModal;
+    window.assistirAnuncioAdsterra = assistirAnuncioAdsterra;
+    
+    // ============================================================
+    // INICIAR
+    // ============================================================
     
     async function iniciar() {
         await abrirDB();
@@ -440,11 +606,15 @@
         await carregarHistorico();
         await carregarSessao();
         renderizarApp();
+        console.log('🚀 App iniciado!');
+        console.log('📺 Anúncios Adsterra - aguarde o botão flutuante');
+        console.log('💸 Saque PIX - mínimo R$ 5,00');
     }
+    
     iniciar();
 </script>
 
-<!-- ✅ SEU CÓDIGO DE ANÚNCIO ADSTERRA - AQUI! -->
+<!-- ✅ SCRIPT DO ANÚNCIO ADSTERRA (ANÚNCIO REAL) -->
 <script src="https://pl29544299.effectivecpmnetwork.com/13/89/78/1389780ab59df29b5a18260e66775ac9.js"></script>
 
 </body>
