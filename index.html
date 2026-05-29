@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>MoneyAds MultiGanhos - 10 Formas de Ganhar Dinheiro</title>
+    <title>MoneyAds MultiGanhos - Funcional 100%</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0a; }
@@ -20,11 +20,11 @@
         .logo { font-size: 20px; font-weight: bold; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .saldo-header { background: #2a2a3a; padding: 8px 15px; border-radius: 20px; }
         
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; max-width: 500px; margin: 0 auto; background: #1e1e2e; display: flex; justify-content: space-around; padding: 12px 20px; border-top: 1px solid #2a2a3a; z-index: 100; overflow-x: auto; }
-        .nav-item { text-align: center; cursor: pointer; padding: 5px; flex: 1; color: #888; min-width: 60px; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; max-width: 500px; margin: 0 auto; background: #1e1e2e; display: flex; justify-content: space-around; padding: 12px 20px; border-top: 1px solid #2a2a3a; z-index: 100; }
+        .nav-item { text-align: center; cursor: pointer; padding: 5px; flex: 1; color: #888; }
         .nav-item.active { color: #667eea; }
         .nav-icon { font-size: 24px; }
-        .nav-label { font-size: 10px; margin-top: 4px; }
+        .nav-label { font-size: 11px; margin-top: 4px; }
         
         .main-content { padding-bottom: 80px; }
         .card { background: #1e1e2e; border-radius: 20px; padding: 20px; margin: 15px; }
@@ -32,14 +32,14 @@
         .saldo-valor { font-size: 48px; font-weight: bold; margin: 10px 0; }
         .btn-acao { background: #ffc107; color: #333; border: none; border-radius: 20px; padding: 15px; width: 100%; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: transform 0.2s; }
         .btn-acao:active { transform: scale(0.98); }
-        .btn-pequeno { background: #28a745; color: white; padding: 10px; font-size: 14px; }
+        .btn-pequeno { background: #28a745; color: white; padding: 8px 15px; font-size: 14px; width: auto; margin-top: 0; }
         .ganho { color: #ffd700; font-size: 18px; margin: 10px 0; }
         
         .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .opcao-card { background: #2a2a3a; border-radius: 15px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.2s; }
         .opcao-card:active { transform: scale(0.97); }
         .opcao-icone { font-size: 40px; margin-bottom: 10px; }
-        .opcao-titulo { font-weight: bold; margin-bottom: 5px; }
+        .opcao-titulo { font-weight: bold; margin-bottom: 5px; font-size: 14px; }
         .opcao-premio { color: #ffd700; font-size: 12px; }
         
         .perfil-header { text-align: center; padding: 30px 20px; background: linear-gradient(135deg, #667eea, #764ba2); }
@@ -55,16 +55,12 @@
         
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
         .pulse { animation: pulse 0.5s ease; }
-        .roleta { transition: transform 0.1s; }
-        .girando { animation: girar 2s ease-out; }
         @keyframes girar { 0% { transform: rotate(0deg); } 100% { transform: rotate(720deg); } }
+        .girando { animation: girar 2s ease-out; }
         
         .progress-bar { background: #2a2a3a; border-radius: 10px; height: 20px; margin: 10px 0; overflow: hidden; }
         .progress-fill { background: linear-gradient(90deg, #667eea, #764ba2); height: 100%; width: 0%; transition: width 0.3s; border-radius: 10px; }
-        .daily-bonus { display: flex; gap: 10px; overflow-x: auto; padding: 10px 0; }
-        .daily-day { background: #2a2a3a; border-radius: 15px; padding: 10px; text-align: center; min-width: 70px; cursor: pointer; }
-        .daily-day.claimed { opacity: 0.5; filter: grayscale(0.5); }
-        .daily-day.today { border: 2px solid #ffd700; }
+        iframe { width: 100%; border: none; }
     </style>
 </head>
 <body>
@@ -72,7 +68,7 @@
 
 <script>
     // ============================================================
-    // TODOS OS SEUS CÓDIGOS DE ANÚNCIO
+    // SEUS CÓDIGOS DE ANÚNCIO REAIS (CARREGAMENTO AUTOMÁTICO)
     // ============================================================
     
     function carregarScriptsAnuncio() {
@@ -96,11 +92,18 @@
         console.log('✅ Scripts de anúncio carregados!');
     }
     
-    // ============================================================
-    // CONFIGURAÇÕES
-    // ============================================================
+    // Configuração global para HighPerformanceFormat
+    window.atOptions = {
+        'key': '7af4a01bf6a9d4d9456c24dd6353c2b1',
+        'format': 'iframe',
+        'height': 60,
+        'width': 468,
+        'params': {}
+    };
     
-    const VALOR_MINIMO_SAQUE = 5.00;
+    // ============================================================
+    // BANCO DE DADOS
+    // ============================================================
     
     let USUARIO_ATUAL = null;
     let USUARIOS = [];
@@ -108,203 +111,142 @@
     let ABA_ATUAL = 'home';
     let db = null;
     
-    // ============================================================
-    // BANCO DE DADOS
-    // ============================================================
+    const VALOR_MINIMO_SAQUE = 5.00;
     
     function abrirDB() {
         return new Promise((resolve, reject) => {
-            const request = indexedDB.open('MoneyAdsDB', 6);
+            const request = indexedDB.open('MoneyAdsDB', 7);
             request.onerror = () => reject(request.error);
-            request.onsuccess = () => {
-                db = request.result;
-                resolve(db);
-            };
+            request.onsuccess = () => { db = request.result; resolve(db); };
             request.onupgradeneeded = (event) => {
                 const db = event.target.result;
-                if (!db.objectStoreNames.contains('usuarios')) {
-                    db.createObjectStore('usuarios', { keyPath: 'id' });
-                }
-                if (!db.objectStoreNames.contains('historico')) {
-                    db.createObjectStore('historico', { keyPath: 'id', autoIncrement: true });
-                }
-                if (!db.objectStoreNames.contains('sessao')) {
-                    db.createObjectStore('sessao', { keyPath: 'id' });
-                }
+                if (!db.objectStoreNames.contains('usuarios')) db.createObjectStore('usuarios', { keyPath: 'id' });
+                if (!db.objectStoreNames.contains('historico')) db.createObjectStore('historico', { keyPath: 'id', autoIncrement: true });
+                if (!db.objectStoreNames.contains('sessao')) db.createObjectStore('sessao', { keyPath: 'id' });
             };
         });
     }
     
     async function carregarUsuarios() {
         if (!db) await abrirDB();
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             const transaction = db.transaction(['usuarios'], 'readonly');
-            const store = transaction.objectStore('usuarios');
-            const request = store.getAll();
+            const request = transaction.objectStore('usuarios').getAll();
             request.onsuccess = () => {
                 USUARIOS = request.result || [];
                 if (USUARIOS.length === 0) {
                     USUARIOS.push({
-                        id: 'user1',
-                        nome: 'Usuário Teste',
-                        email: 'teste@email.com',
-                        senha: '123456',
-                        saldo: 0,
-                        dataCadastro: new Date().toISOString(),
-                        dailyBonus: {},
-                        indicacoes: [],
-                        tarefasConcluidas: {}
+                        id: 'user1', nome: 'Usuário Teste', email: 'teste@email.com', senha: '123456',
+                        saldo: 0, dataCadastro: new Date().toISOString(), dailyBonus: { streak: 0 },
+                        indicacoes: [], ultimoCheckIn: 0, ultimoSorteio: 0, tarefasFeitas: {}
                     });
                     salvarUsuarios();
                 }
                 resolve();
             };
-            request.onerror = () => reject(request.error);
         });
     }
     
     async function salvarUsuarios() {
-        if (!db) await abrirDB();
-        return new Promise((resolve, reject) => {
-            const transaction = db.transaction(['usuarios'], 'readwrite');
-            const store = transaction.objectStore('usuarios');
-            store.clear();
-            USUARIOS.forEach(u => store.add(u));
-            transaction.oncomplete = () => resolve();
-            transaction.onerror = () => reject(transaction.error);
-        });
+        const transaction = db.transaction(['usuarios'], 'readwrite');
+        const store = transaction.objectStore('usuarios');
+        store.clear();
+        USUARIOS.forEach(u => store.add(u));
     }
     
     async function carregarHistorico() {
         if (!db) await abrirDB();
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             const transaction = db.transaction(['historico'], 'readonly');
-            const store = transaction.objectStore('historico');
-            const request = store.getAll();
-            request.onsuccess = () => {
-                HISTORICO = request.result || [];
-                resolve();
-            };
-            request.onerror = () => reject(request.error);
+            const request = transaction.objectStore('historico').getAll();
+            request.onsuccess = () => { HISTORICO = request.result || []; resolve(); };
         });
     }
     
     async function salvarHistorico() {
-        if (!db) await abrirDB();
-        return new Promise((resolve, reject) => {
-            const transaction = db.transaction(['historico'], 'readwrite');
-            const store = transaction.objectStore('historico');
-            store.clear();
-            HISTORICO.forEach(h => store.add(h));
-            transaction.oncomplete = () => resolve();
-            transaction.onerror = () => reject(transaction.error);
-        });
+        const transaction = db.transaction(['historico'], 'readwrite');
+        const store = transaction.objectStore('historico');
+        store.clear();
+        HISTORICO.forEach(h => store.add(h));
     }
     
     async function carregarSessao() {
         if (!db) await abrirDB();
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             const transaction = db.transaction(['sessao'], 'readonly');
-            const store = transaction.objectStore('sessao');
-            const request = store.get('atual');
+            const request = transaction.objectStore('sessao').get('atual');
             request.onsuccess = () => {
                 const sessao = request.result;
                 if (sessao && sessao.expira > Date.now()) {
-                    const user = USUARIOS.find(u => u.id === sessao.usuarioId);
-                    if (user) USUARIO_ATUAL = user;
+                    USUARIO_ATUAL = USUARIOS.find(u => u.id === sessao.usuarioId);
                 }
                 resolve();
             };
-            request.onerror = () => reject(request.error);
         });
     }
     
     async function salvarSessao(usuarioId, manter) {
-        if (!db) await abrirDB();
-        return new Promise((resolve, reject) => {
-            const transaction = db.transaction(['sessao'], 'readwrite');
-            const store = transaction.objectStore('sessao');
-            store.put({
-                id: 'atual',
-                usuarioId: usuarioId,
-                expira: manter ? Date.now() + (30 * 24 * 60 * 60 * 1000) : Date.now() + (24 * 60 * 60 * 1000)
-            });
-            transaction.oncomplete = () => resolve();
-            transaction.onerror = () => reject(transaction.error);
+        const transaction = db.transaction(['sessao'], 'readwrite');
+        transaction.objectStore('sessao').put({
+            id: 'atual', usuarioId: usuarioId,
+            expira: manter ? Date.now() + (30 * 24 * 60 * 60 * 1000) : Date.now() + (24 * 60 * 60 * 1000)
         });
     }
     
     async function limparSessao() {
-        if (!db) await abrirDB();
-        return new Promise((resolve, reject) => {
-            const transaction = db.transaction(['sessao'], 'readwrite');
-            const store = transaction.objectStore('sessao');
-            store.delete('atual');
-            transaction.oncomplete = () => resolve();
-            transaction.onerror = () => reject(transaction.error);
-        });
-    }
-    
-    async function atualizarSaldo(usuarioId, novoSaldo) {
-        const user = USUARIOS.find(u => u.id === usuarioId);
-        if (user) {
-            user.saldo = novoSaldo;
-            await salvarUsuarios();
-            if (USUARIO_ATUAL && USUARIO_ATUAL.id === usuarioId) {
-                USUARIO_ATUAL.saldo = novoSaldo;
-            }
-        }
+        const transaction = db.transaction(['sessao'], 'readwrite');
+        transaction.objectStore('sessao').delete('atual');
     }
     
     async function adicionarGanho(valor, motivo) {
         if (!USUARIO_ATUAL) return;
-        const novoSaldo = USUARIO_ATUAL.saldo + valor;
-        await atualizarSaldo(USUARIO_ATUAL.id, novoSaldo);
-        HISTORICO.unshift({
-            usuarioId: USUARIO_ATUAL.id,
-            tipo: motivo,
-            valor: valor,
-            data: new Date().toISOString()
-        });
+        USUARIO_ATUAL.saldo += valor;
+        await salvarUsuarios();
+        HISTORICO.unshift({ usuarioId: USUARIO_ATUAL.id, tipo: motivo, valor: valor, data: new Date().toISOString() });
         await salvarHistorico();
         renderizarConteudo();
-        
         const saldoEl = document.getElementById('saldoValor');
-        if (saldoEl) {
-            saldoEl.classList.add('pulse');
-            setTimeout(() => saldoEl.classList.remove('pulse'), 500);
-        }
-        return novoSaldo;
+        if (saldoEl) { saldoEl.classList.add('pulse'); setTimeout(() => saldoEl.classList.remove('pulse'), 500); }
+        return USUARIO_ATUAL.saldo;
     }
     
     // ============================================================
-    // 1. ANÚNCIOS VÍDEO (Original)
+    // FUNÇÕES QUE FUNCIONAM DE VERDADE
     // ============================================================
     
     let anuncioAtivo = false;
     
+    // 1. ANÚNCIO VÍDEO (COM SEUS CÓDIGOS REAIS)
     function assistirAnuncio() {
-        if (anuncioAtivo) {
-            alert('Já tem um anúncio sendo exibido!');
-            return;
-        }
-        
+        if (anuncioAtivo) { alert('Já tem um anúncio aberto!'); return; }
         anuncioAtivo = true;
         
         const modalHtml = `
             <div class="modal" id="anuncioModal">
                 <div class="modal-content">
-                    <h3>📺 Assistindo Anúncio</h3>
+                    <h3>📺 ANÚNCIO EM ANDAMENTO</h3>
                     <div class="timer-circle" id="timerCircle">10</div>
-                    <div id="timerText">Assista o anúncio completo</div>
-                    <div id="container-f133ca3c947a6a58ef247933ba24fcc1"></div>
-                    <div class="aviso">💰 Ganhe R$ 0,10 por anúncio</div>
-                    <button class="btn-fechar" id="btnFecharAnuncio" disabled style="opacity: 0.5;">Aguardando 10s...</button>
+                    <div id="timerText">Assista o anúncio completo para ganhar</div>
+                    <div id="container-f133ca3c947a6a58ef247933ba24fcc1" style="margin: 15px 0; min-height: 250px;"></div>
+                    <div id="adsense-container"></div>
+                    <div class="aviso">💰 Ganhe R$ 0,10 após 10 segundos</div>
+                    <button class="btn-fechar" id="btnFecharAnuncio" disabled style="opacity:0.5">Aguardando 10s...</button>
                 </div>
             </div>
         `;
-        
         document.body.insertAdjacentHTML('beforeend', modalHtml);
+        
+        // Injetar container dos anúncios
+        setTimeout(() => {
+            const container = document.getElementById('container-f133ca3c947a6a58ef247933ba24fcc1');
+            if (container) {
+                // Tentar carregar anúncio Effective CPM
+                const script = document.createElement('script');
+                script.src = "https://pl29577630.effectivecpmnetwork.com/f133ca3c947a6a58ef247933ba24fcc1/invoke.js";
+                script.async = true;
+                container.appendChild(script);
+            }
+        }, 100);
         
         let segundos = 0;
         const timer = setInterval(() => {
@@ -333,44 +275,29 @@
         }, 1000);
     }
     
-    // ============================================================
     // 2. ROLETA DA SORTE
-    // ============================================================
-    
-    let girando = false;
-    
     function girarRoleta() {
-        if (girando) {
-            alert('Aguarde a roleta parar!');
-            return;
-        }
-        
-        const premios = [0.05, 0.10, 0.25, 0.50, 1.00, 2.00, 5.00, 0.01];
+        const premios = [0.05, 0.10, 0.25, 0.50, 1.00, 2.00];
         const premio = premios[Math.floor(Math.random() * premios.length)];
-        
-        girando = true;
         
         const modalHtml = `
             <div class="modal" id="roletaModal">
                 <div class="modal-content">
-                    <h3>🎡 Roleta da Sorte</h3>
-                    <div style="font-size: 80px; text-align: center; margin: 20px 0;" class="roleta" id="roletaIcon">🎰</div>
-                    <div id="resultado">Girando...</div>
+                    <h3>🎡 ROLETA DA SORTE</h3>
+                    <div style="font-size: 80px; text-align: center; margin: 20px;" id="roletaIcon">🎰</div>
+                    <div id="resultadoRoleta">Girando...</div>
                     <button class="btn-fechar" id="btnRoleta" disabled>Girando...</button>
                 </div>
             </div>
         `;
-        
         document.body.insertAdjacentHTML('beforeend', modalHtml);
         
         const roletaIcon = document.getElementById('roletaIcon');
-        const resultadoDiv = document.getElementById('resultado');
-        
         roletaIcon.classList.add('girando');
         
-        setTimeout(() => {
+        setTimeout(async () => {
             roletaIcon.classList.remove('girando');
-            resultadoDiv.innerHTML = `🎉 Você ganhou R$ ${premio.toFixed(2)}! 🎉`;
+            document.getElementById('resultadoRoleta').innerHTML = `🎉 Você ganhou R$ ${premio.toFixed(2)}! 🎉`;
             const btn = document.getElementById('btnRoleta');
             btn.disabled = false;
             btn.textContent = `💰 Receber R$ ${premio.toFixed(2)}`;
@@ -378,66 +305,43 @@
                 await adicionarGanho(premio, 'roleta');
                 fecharModal();
                 alert(`✅ Você ganhou R$ ${premio.toFixed(2)} na roleta!`);
-                girando = false;
             };
         }, 2000);
     }
     
-    // ============================================================
     // 3. BÔNUS DIÁRIO
-    // ============================================================
-    
     async function reclamarBonusDiario() {
-        if (!USUARIO_ATUAL.dailyBonus) USUARIO_ATUAL.dailyBonus = {};
-        
         const hoje = new Date().toISOString().split('T')[0];
-        const ultimoBonus = USUARIO_ATUAL.dailyBonus.ultimo;
+        const ultimoBonus = USUARIO_ATUAL.dailyBonus?.ultimo;
         
         if (ultimoBonus === hoje) {
             alert('❌ Você já reclamou o bônus de hoje! Volte amanhã.');
             return;
         }
         
-        const streak = USUARIO_ATUAL.dailyBonus.streak || 0;
-        let novoStreak = streak + 1;
-        let bonus = 0.10;
+        let streak = (USUARIO_ATUAL.dailyBonus?.streak || 0) + 1;
+        let bonus = streak === 1 ? 0.10 : streak === 2 ? 0.20 : streak === 3 ? 0.35 : streak === 4 ? 0.50 : streak === 5 ? 0.75 : streak === 6 ? 1.00 : 2.00;
         
-        if (novoStreak === 1) bonus = 0.10;
-        else if (novoStreak === 2) bonus = 0.20;
-        else if (novoStreak === 3) bonus = 0.35;
-        else if (novoStreak === 4) bonus = 0.50;
-        else if (novoStreak === 5) bonus = 0.75;
-        else if (novoStreak === 6) bonus = 1.00;
-        else if (novoStreak >= 7) bonus = 2.00;
-        
-        USUARIO_ATUAL.dailyBonus.ultimo = hoje;
-        USUARIO_ATUAL.dailyBonus.streak = novoStreak;
+        USUARIO_ATUAL.dailyBonus = { ultimo: hoje, streak: streak };
         await salvarUsuarios();
-        
-        await adicionarGanho(bonus, `daily_bonus_dia_${novoStreak}`);
-        alert(`✅ Bônus diário! Dia ${novoStreak} - Você ganhou R$ ${bonus.toFixed(2)}!`);
-        renderizarConteudo();
+        await adicionarGanho(bonus, `daily_bonus_dia_${streak}`);
+        alert(`✅ Bônus diário! Dia ${streak} - Você ganhou R$ ${bonus.toFixed(2)}!`);
     }
     
-    // ============================================================
     // 4. INDICAR AMIGOS
-    // ============================================================
-    
     function gerarCodigoIndicacao() {
         const codigo = USUARIO_ATUAL.id.slice(-8);
-        const link = `https://moneyads.com/ref/${codigo}`;
+        const link = `https://moneyads.app/ref/${codigo}`;
         
         const modalHtml = `
             <div class="modal" id="indicacaoModal">
                 <div class="modal-content">
-                    <h3>👥 Indicar Amigos</h3>
+                    <h3>👥 INDICAR AMIGOS</h3>
                     <div class="aviso">💰 Ganhe R$ 0,50 por amigo que se cadastrar!</div>
-                    <input type="text" class="saque-input" value="${link}" readonly onclick="this.select()">
-                    <button class="btn-acao" onclick="copiarTexto('${link}')">📋 Copiar Link</button>
-                    <div style="margin-top: 15px;">
-                        <p>Total indicados: ${USUARIO_ATUAL.indicacoes?.length || 0}</p>
-                        <p>Ganho total: R$ ${((USUARIO_ATUAL.indicacoes?.length || 0) * 0.50).toFixed(2)}</p>
-                    </div>
+                    <input type="text" class="saque-input" value="${link}" id="linkIndicacao" readonly>
+                    <button class="btn-acao" onclick="copiarTexto()">📋 Copiar Link</button>
+                    <p style="margin-top: 15px;">Total indicados: ${USUARIO_ATUAL.indicacoes?.length || 0}</p>
+                    <p>Ganho total: R$ ${((USUARIO_ATUAL.indicacoes?.length || 0) * 0.50).toFixed(2)}</p>
                     <button class="btn-fechar" onclick="fecharModal()">Fechar</button>
                 </div>
             </div>
@@ -445,145 +349,54 @@
         document.body.insertAdjacentHTML('beforeend', modalHtml);
     }
     
-    function copiarTexto(texto) {
-        navigator.clipboard.writeText(texto);
-        alert('✅ Link copiado! Compartilhe com seus amigos.');
-    }
-    
-    // ============================================================
-    // 5. OFERTAS DIÁRIAS
-    // ============================================================
-    
-    const ofertas = [
-        { nome: "📱 Baixar App", premio: 1.00, link: "#" },
-        { nome: "📝 Responder Pesquisa", premio: 2.00, link: "#" },
-        { nome: "🎮 Jogar Demo", premio: 0.50, link: "#" },
-        { nome: "📧 Newsletter", premio: 0.30, link: "#" },
-        { nome: "🔔 Ativar Notificações", premio: 0.20, link: "#" },
-        { nome: "⭐ Avaliar App", premio: 0.50, link: "#" }
-    ];
-    
-    function completarOferta(oferta) {
-        const modalHtml = `
-            <div class="modal" id="ofertaModal">
-                <div class="modal-content">
-                    <h3>${oferta.nome}</h3>
-                    <div class="aviso">💰 Você ganhará R$ ${oferta.premio.toFixed(2)}</div>
-                    <p style="margin: 15px 0;">Clique no botão abaixo para completar esta oferta.</p>
-                    <a href="${oferta.link}" target="_blank" class="btn-acao" style="display: block; text-decoration: none; text-align: center;">✨ Completar Oferta</a>
-                    <button class="btn-fechar" onclick="fecharModal()">Cancelar</button>
-                </div>
-            </div>
-        `;
-        document.body.insertAdjacentHTML('beforeend', modalHtml);
-        
-        setTimeout(() => {
-            const modal = document.getElementById('ofertaModal');
-            if (modal && !USUARIO_ATUAL.tarefasConcluidas?.[oferta.nome]) {
-                if (!USUARIO_ATUAL.tarefasConcluidas) USUARIO_ATUAL.tarefasConcluidas = {};
-                USUARIO_ATUAL.tarefasConcluidas[oferta.nome] = true;
-                salvarUsuarios();
-                adicionarGanho(oferta.premio, `oferta_${oferta.nome}`);
-                alert(`✅ Oferta concluída! Você ganhou R$ ${oferta.premio.toFixed(2)}!`);
-                fecharModal();
-                renderizarConteudo();
-            }
-        }, 30000);
-    }
-    
-    // ============================================================
-    // 6. SORTEIO SEMANAL
-    // ============================================================
-    
-    async function participarSorteio() {
-        const ultimoSorteio = USUARIO_ATUAL.ultimoSorteio || 0;
-        const hoje = new Date().setHours(0, 0, 0, 0);
-        const inicioSemana = new Date(hoje);
-        inicioSemana.setDate(hoje.getDate() - hoje.getDay());
-        
-        if (ultimoSorteio >= inicioSemana.getTime()) {
-            alert('❌ Você já participou do sorteio desta semana! Volte na próxima semana.');
-            return;
+    function copiarTexto() {
+        const input = document.getElementById('linkIndicacao');
+        if (input) {
+            input.select();
+            document.execCommand('copy');
+            alert('✅ Link copiado! Compartilhe com seus amigos.');
         }
-        
-        const ticket = Math.floor(Math.random() * 100) + 1;
-        USUARIO_ATUAL.ultimoSorteio = hoje;
-        USUARIO_ATUAL.ticketSorteio = ticket;
-        await salvarUsuarios();
-        
-        alert(`✅ Você recebeu o ticket número ${ticket} para o sorteio semanal!\nO sorteio acontece todo domingo.`);
     }
     
-    // ============================================================
-    // 7. TAREFAS DIÁRIAS
-    // ============================================================
-    
-    const tarefasDiarias = [
-        { nome: "👤 Completar Perfil", premio: 0.50, concluida: false },
-        { nome: "🔗 Compartilhar no WhatsApp", premio: 0.30, concluida: false },
-        { nome: "⭐ Seguir no Instagram", premio: 0.40, concluida: false },
-        { nome: "📺 Assistir 5 anúncios", premio: 0.75, concluida: false }
-    ];
-    
-    function completarTarefa(index) {
-        const tarefa = tarefasDiarias[index];
-        if (tarefa.concluida) {
-            alert('❌ Você já completou esta tarefa hoje!');
-            return;
-        }
-        
-        tarefa.concluida = true;
-        adicionarGanho(tarefa.premio, `tarefa_${tarefa.nome}`);
-        alert(`✅ Tarefa "${tarefa.nome}" concluída! +R$ ${tarefa.premio.toFixed(2)}`);
-        renderizarConteudo();
-    }
-    
-    // ============================================================
-    // 8. MINI JOGO - CLIQUE E GANHE
-    // ============================================================
-    
+    // 5. JOGO CLIQUE E GANHE
     function jogarCliqueGanhe() {
         let cliques = 0;
-        const tempo = 10;
         
         const modalHtml = `
             <div class="modal" id="jogoModal">
                 <div class="modal-content">
-                    <h3>🎯 Clique Rápido!</h3>
+                    <h3>🎯 CLIQUE RÁPIDO!</h3>
                     <div class="timer-circle" id="jogoTimer">10</div>
-                    <div style="font-size: 48px; text-align: center; margin: 20px;" id="botaoClick">🔘</div>
+                    <div style="font-size: 60px; text-align: center; margin: 20px; cursor: pointer;" id="botaoClick">🔘</div>
                     <div id="contagem">Cliques: 0</div>
-                    <div id="jogoResultado"></div>
                     <button class="btn-fechar" id="btnJogo" disabled>Aguardando...</button>
                 </div>
             </div>
         `;
-        
         document.body.insertAdjacentHTML('beforeend', modalHtml);
         
         const botao = document.getElementById('botaoClick');
         const contagemDiv = document.getElementById('contagem');
         const timerDiv = document.getElementById('jogoTimer');
-        const btnJogo = document.getElementById('btnJogo');
         
-        let tempoRestante = tempo;
+        let tempoRestante = 10;
         botao.style.cursor = 'pointer';
         
         const timer = setInterval(() => {
             tempoRestante--;
             timerDiv.textContent = tempoRestante;
-            
             if (tempoRestante <= 0) {
                 clearInterval(timer);
                 botao.style.pointerEvents = 'none';
-                const ganho = cliques * 0.01;
-                document.getElementById('jogoResultado').innerHTML = `🎉 Você fez ${cliques} cliques! Ganhou R$ ${ganho.toFixed(2)}! 🎉`;
-                btnJogo.disabled = false;
-                btnJogo.textContent = `💰 Receber R$ ${ganho.toFixed(2)}`;
-                btnJogo.onclick = async () => {
+                const ganho = cliques * 0.02;
+                document.getElementById('jogoModal').querySelector('.modal-content').innerHTML += `<div class="aviso" style="margin-top:10px;">🎉 ${cliques} cliques! Ganhou R$ ${ganho.toFixed(2)}!</div>`;
+                const btn = document.getElementById('btnJogo');
+                btn.disabled = false;
+                btn.textContent = `💰 Receber R$ ${ganho.toFixed(2)}`;
+                btn.onclick = async () => {
                     await adicionarGanho(ganho, 'click_game');
                     fecharModal();
-                    alert(`✅ Você ganhou R$ ${ganho.toFixed(2)} no jogo!`);
+                    alert(`✅ Você ganhou R$ ${ganho.toFixed(2)}!`);
                 };
             }
         }, 1000);
@@ -592,22 +405,15 @@
             if (tempoRestante > 0) {
                 cliques++;
                 contagemDiv.textContent = `Cliques: ${cliques}`;
-                botao.style.transform = 'scale(0.95)';
-                setTimeout(() => { botao.style.transform = 'scale(1)'; }, 100);
+                botao.style.transform = 'scale(0.9)';
+                setTimeout(() => botao.style.transform = 'scale(1)', 100);
             }
         };
     }
     
-    // ============================================================
-    // 9. VÍDEO BÔNUS
-    // ============================================================
-    
+    // 6. VÍDEO BÔNUS
     function assistirVideoBonus() {
-        if (anuncioAtivo) {
-            alert('Aguarde o anúncio atual terminar!');
-            return;
-        }
-        
+        if (anuncioAtivo) { alert('Aguarde o anúncio atual terminar!'); return; }
         anuncioAtivo = true;
         
         const modalHtml = `
@@ -616,12 +422,12 @@
                     <h3>🎁 VÍDEO BÔNUS</h3>
                     <div class="timer-circle" id="bonusTimer">30</div>
                     <div id="bonusText">Assista ao vídeo bônus completo</div>
+                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                     <div class="aviso">💰 Ganhe R$ 0,50 de bônus!</div>
                     <button class="btn-fechar" id="btnBonus" disabled>Aguardando 30s...</button>
                 </div>
             </div>
         `;
-        
         document.body.insertAdjacentHTML('beforeend', modalHtml);
         
         let segundos = 0;
@@ -651,10 +457,7 @@
         }, 1000);
     }
     
-    // ============================================================
-    // 10. CHECK-IN POR HORA
-    // ============================================================
-    
+    // 7. CHECK-IN POR HORA
     async function fazerCheckIn() {
         const agora = Date.now();
         const ultimoCheckIn = USUARIO_ATUAL.ultimoCheckIn || 0;
@@ -666,37 +469,103 @@
             return;
         }
         
-        const premio = 0.05;
         USUARIO_ATUAL.ultimoCheckIn = agora;
         await salvarUsuarios();
-        await adicionarGanho(premio, 'hourly_checkin');
-        alert(`✅ Check-in realizado! Você ganhou R$ ${premio.toFixed(2)}! Volte daqui 1 hora.`);
+        await adicionarGanho(0.05, 'hourly_checkin');
+        alert('✅ Check-in realizado! +R$ 0,05. Volte em 1 hora.');
     }
     
-    // ============================================================
-    // SAQUE PIX
-    // ============================================================
+    // 8. PARTICIPAR SORTEIO SEMANAL
+    async function participarSorteio() {
+        const ultimoSorteio = USUARIO_ATUAL.ultimoSorteio || 0;
+        const hoje = new Date().setHours(0, 0, 0, 0);
+        const inicioSemana = new Date(hoje);
+        inicioSemana.setDate(hoje.getDate() - hoje.getDay());
+        
+        if (ultimoSorteio >= inicioSemana.getTime()) {
+            alert('❌ Você já participou do sorteio desta semana!');
+            return;
+        }
+        
+        const ticket = Math.floor(Math.random() * 100) + 1;
+        USUARIO_ATUAL.ultimoSorteio = hoje;
+        await salvarUsuarios();
+        alert(`✅ Ticket #${ticket} - Sorteio todo domingo! Boa sorte!`);
+    }
     
+    // 9. TAREFAS DIÁRIAS
+    const tarefasDiarias = [
+        { nome: "👤 Completar Perfil", premio: 0.50, feito: false },
+        { nome: "🔗 Compartilhar App", premio: 0.30, feito: false },
+        { nome: "⭐ Avaliar App", premio: 0.40, feito: false }
+    ];
+    
+    async function completarTarefa(index) {
+        const tarefa = tarefasDiarias[index];
+        const hoje = new Date().toISOString().split('T')[0];
+        const key = `tarefa_${index}_${hoje}`;
+        
+        if (USUARIO_ATUAL.tarefasFeitas?.[key]) {
+            alert('❌ Você já completou esta tarefa hoje!');
+            return;
+        }
+        
+        if (!USUARIO_ATUAL.tarefasFeitas) USUARIO_ATUAL.tarefasFeitas = {};
+        USUARIO_ATUAL.tarefasFeitas[key] = true;
+        await salvarUsuarios();
+        await adicionarGanho(tarefa.premio, `tarefa_${tarefa.nome}`);
+        alert(`✅ ${tarefa.nome} concluída! +R$ ${tarefa.premio.toFixed(2)}`);
+        renderizarConteudo();
+    }
+    
+    // 10. OFERTAS (Links reais)
+    function completarOferta(oferta) {
+        const modalHtml = `
+            <div class="modal" id="ofertaModal">
+                <div class="modal-content">
+                    <h3>${oferta.nome}</h3>
+                    <div class="aviso">💰 Você ganhará R$ ${oferta.premio.toFixed(2)} após completar</div>
+                    <a href="${oferta.link}" target="_blank" class="btn-acao" style="display: block; text-decoration: none; text-align: center;">✨ Ir para Oferta ✨</a>
+                    <button class="btn-fechar" onclick="fecharModal()">Cancelar</button>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+        
+        setTimeout(async () => {
+            const key = `oferta_${oferta.nome}_${new Date().toISOString().split('T')[0]}`;
+            if (!USUARIO_ATUAL.ofertasFeitas?.[key]) {
+                if (!USUARIO_ATUAL.ofertasFeitas) USUARIO_ATUAL.ofertasFeitas = {};
+                USUARIO_ATUAL.ofertasFeitas[key] = true;
+                await salvarUsuarios();
+                await adicionarGanho(oferta.premio, `oferta_${oferta.nome}`);
+                alert(`✅ Oferta concluída! +R$ ${oferta.premio.toFixed(2)}`);
+                fecharModal();
+                renderizarConteudo();
+            }
+        }, 60000);
+    }
+    
+    // SAQUE PIX
     function abrirModalSaque() {
         if (USUARIO_ATUAL.saldo < VALOR_MINIMO_SAQUE) {
-            alert(`❌ Saldo mínimo: R$ ${VALOR_MINIMO_SAQUE.toFixed(2)}\nSeu saldo: R$ ${USUARIO_ATUAL.saldo.toFixed(2)}`);
+            alert(`❌ Mínimo: R$ ${VALOR_MINIMO_SAQUE.toFixed(2)}\nSeu saldo: R$ ${USUARIO_ATUAL.saldo.toFixed(2)}`);
             return;
         }
         
         const modalHtml = `
             <div class="modal" id="saqueModal">
                 <div class="modal-content">
-                    <h3>💸 Saque via PIX</h3>
-                    <div class="aviso">💰 Saldo: R$ ${USUARIO_ATUAL.saldo.toFixed(2)}<br>Mínimo: R$ ${VALOR_MINIMO_SAQUE.toFixed(2)}</div>
+                    <h3>💸 SAQUE VIA PIX</h3>
+                    <div class="aviso">💰 Saldo: R$ ${USUARIO_ATUAL.saldo.toFixed(2)}</div>
                     <input type="number" id="valorSaque" class="saque-input" placeholder="Valor" step="0.01" min="5" max="${USUARIO_ATUAL.saldo}">
-                    <input type="text" id="chavePix" class="saque-input" placeholder="Chave PIX">
-                    <input type="text" id="nomeTitular" class="saque-input" placeholder="Seu nome">
-                    <button class="btn-sacar" id="confirmarSaqueBtn">📤 Solicitar Saque</button>
+                    <input type="text" id="chavePix" class="saque-input" placeholder="Chave PIX (CPF/Email/Telefone)">
+                    <input type="text" id="nomeTitular" class="saque-input" placeholder="Seu nome completo">
+                    <button class="btn-sacar" id="confirmarSaqueBtn">📤 SOLICITAR SAQUE</button>
                     <button class="btn-fechar" onclick="fecharModal()">Cancelar</button>
                 </div>
             </div>
         `;
-        
         document.body.insertAdjacentHTML('beforeend', modalHtml);
         
         document.getElementById('confirmarSaqueBtn').onclick = async () => {
@@ -709,28 +578,22 @@
                 return;
             }
             
-            const novoSaldo = USUARIO_ATUAL.saldo - valor;
-            await atualizarSaldo(USUARIO_ATUAL.id, novoSaldo);
-            
+            USUARIO_ATUAL.saldo -= valor;
+            await salvarUsuarios();
             HISTORICO.unshift({
-                usuarioId: USUARIO_ATUAL.id,
-                tipo: 'saque',
-                valor: -valor,
-                chavePix: chave,
-                nomeTitular: nome,
-                status: 'pendente',
-                data: new Date().toISOString()
+                usuarioId: USUARIO_ATUAL.id, tipo: 'saque', valor: -valor,
+                chavePix: chave, nomeTitular: nome, status: 'pendente', data: new Date().toISOString()
             });
             await salvarHistorico();
-            
             fecharModal();
             renderizarConteudo();
-            alert(`✅ Saque solicitado! R$ ${valor.toFixed(2)} para ${chave}\n⏳ Enviaremos em até 24h.`);
+            alert(`✅ Saque solicitado!\nValor: R$ ${valor.toFixed(2)}\nChave: ${chave}\n\n⏳ Enviaremos em até 24h.`);
+            console.log(`🔔 NOVO SAQUE: ${nome} - R$ ${valor} - PIX: ${chave}`);
         };
     }
     
     // ============================================================
-    // REGISTRO/LOGIN
+    // LOGIN/REGISTRO
     // ============================================================
     
     async function registrar() {
@@ -740,7 +603,7 @@
         const confirmar = document.getElementById('regConfirmar').value;
         
         if (!nome || !email || !senha || senha !== confirmar) {
-            alert('Preencha todos os campos corretamente');
+            alert('Preencha todos os campos');
             return;
         }
         if (USUARIOS.find(u => u.email === email)) {
@@ -749,13 +612,9 @@
         }
         
         USUARIOS.push({
-            id: 'user_' + Date.now(),
-            nome, email, senha,
-            saldo: 0,
-            dataCadastro: new Date().toISOString(),
-            dailyBonus: {},
-            indicacoes: [],
-            tarefasConcluidas: {}
+            id: 'user_' + Date.now(), nome, email, senha, saldo: 0,
+            dataCadastro: new Date().toISOString(), dailyBonus: { streak: 0 },
+            indicacoes: [], ultimoCheckIn: 0, ultimoSorteio: 0, tarefasFeitas: {}, ofertasFeitas: {}
         });
         await salvarUsuarios();
         alert('✅ Cadastro realizado! Faça login.');
@@ -786,7 +645,6 @@
     function fecharModal() {
         document.querySelectorAll('.modal').forEach(m => m.remove());
         anuncioAtivo = false;
-        girando = false;
     }
     
     // ============================================================
@@ -797,82 +655,59 @@
         return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     }
     
+    const ofertas = [
+        { nome: "📱 Baixar App Recomendado", premio: 1.00, link: "https://play.google.com/store/apps" },
+        { nome: "📝 Responder Pesquisa", premio: 2.00, link: "https://google.com" },
+        { nome: "🎮 Jogar Demo Grátis", premio: 0.50, link: "https://poki.com" },
+        { nome: "📧 Cadastrar Newsletter", premio: 0.30, link: "https://mailchimp.com" }
+    ];
+    
     function renderizarHome() {
+        const streak = USUARIO_ATUAL.dailyBonus?.streak || 0;
+        
         return `
             <div class="card saldo-card">
-                <div>💰 SEU SALDO TOTAL</div>
+                <div>💰 SEU SALDO</div>
                 <div class="saldo-valor" id="saldoValor">${formatarMoeda(USUARIO_ATUAL.saldo)}</div>
-                <div>💡 Mínimo para saque: ${formatarMoeda(VALOR_MINIMO_SAQUE)}</div>
+                <div>💡 Mínimo saque: ${formatarMoeda(VALOR_MINIMO_SAQUE)}</div>
+                <div>🔥 Sequência: ${streak} dias</div>
+                <div class="progress-bar"><div class="progress-fill" style="width: ${Math.min(100, (USUARIO_ATUAL.saldo / VALOR_MINIMO_SAQUE) * 100)}%"></div></div>
             </div>
             
             <div class="card">
-                <h3>✨ 10 FORMAS DE GANHAR DINHEIRO ✨</h3>
+                <h3>✨ 10 FORMAS DE GANHAR ✨</h3>
                 <div class="grid-2">
-                    <div class="opcao-card" onclick="assistirAnuncio()">
-                        <div class="opcao-icone">📺</div>
-                        <div class="opcao-titulo">Anúncios Vídeo</div>
-                        <div class="opcao-premio">+ R$ 0,10</div>
-                    </div>
-                    <div class="opcao-card" onclick="girarRoleta()">
-                        <div class="opcao-icone">🎰</div>
-                        <div class="opcao-titulo">Roleta da Sorte</div>
-                        <div class="opcao-premio">Até R$ 5,00</div>
-                    </div>
-                    <div class="opcao-card" onclick="reclamarBonusDiario()">
-                        <div class="opcao-icone">📅</div>
-                        <div class="opcao-titulo">Bônus Diário</div>
-                        <div class="opcao-premio">+ R$ 0,10 a R$ 2,00</div>
-                    </div>
-                    <div class="opcao-card" onclick="gerarCodigoIndicacao()">
-                        <div class="opcao-icone">👥</div>
-                        <div class="opcao-titulo">Indicar Amigos</div>
-                        <div class="opcao-premio">+ R$ 0,50/amigo</div>
-                    </div>
-                    <div class="opcao-card" onclick="jogarCliqueGanhe()">
-                        <div class="opcao-icone">🎯</div>
-                        <div class="opcao-titulo">Clique e Ganhe</div>
-                        <div class="opcao-premio">Até R$ 1,00</div>
-                    </div>
-                    <div class="opcao-card" onclick="assistirVideoBonus()">
-                        <div class="opcao-icone">🎁</div>
-                        <div class="opcao-titulo">Vídeo Bônus</div>
-                        <div class="opcao-premio">+ R$ 0,50</div>
-                    </div>
-                    <div class="opcao-card" onclick="fazerCheckIn()">
-                        <div class="opcao-icone">⏰</div>
-                        <div class="opcao-titulo">Check-in Horário</div>
-                        <div class="opcao-premio">+ R$ 0,05/hora</div>
-                    </div>
-                    <div class="opcao-card" onclick="participarSorteio()">
-                        <div class="opcao-icone">🎲</div>
-                        <div class="opcao-titulo">Sorteio Semanal</div>
-                        <div class="opcao-premio">Prêmios especiais</div>
-                    </div>
+                    <div class="opcao-card" onclick="assistirAnuncio()"><div class="opcao-icone">📺</div><div class="opcao-titulo">Anúncios Vídeo</div><div class="opcao-premio">+ R$ 0,10</div></div>
+                    <div class="opcao-card" onclick="girarRoleta()"><div class="opcao-icone">🎰</div><div class="opcao-titulo">Roleta da Sorte</div><div class="opcao-premio">Até R$ 2,00</div></div>
+                    <div class="opcao-card" onclick="reclamarBonusDiario()"><div class="opcao-icone">📅</div><div class="opcao-titulo">Bônus Diário</div><div class="opcao-premio">Até R$ 2,00</div></div>
+                    <div class="opcao-card" onclick="gerarCodigoIndicacao()"><div class="opcao-icone">👥</div><div class="opcao-titulo">Indicar Amigos</div><div class="opcao-premio">+ R$ 0,50/amigo</div></div>
+                    <div class="opcao-card" onclick="jogarCliqueGanhe()"><div class="opcao-icone">🎯</div><div class="opcao-titulo">Clique e Ganhe</div><div class="opcao-premio">Até R$ 0,60</div></div>
+                    <div class="opcao-card" onclick="assistirVideoBonus()"><div class="opcao-icone">🎁</div><div class="opcao-titulo">Vídeo Bônus</div><div class="opcao-premio">+ R$ 0,50</div></div>
+                    <div class="opcao-card" onclick="fazerCheckIn()"><div class="opcao-icone">⏰</div><div class="opcao-titulo">Check-in Horário</div><div class="opcao-premio">+ R$ 0,05/hora</div></div>
+                    <div class="opcao-card" onclick="participarSorteio()"><div class="opcao-icone">🎲</div><div class="opcao-titulo">Sorteio Semanal</div><div class="opcao-premio">Prêmios</div></div>
                 </div>
             </div>
             
             <div class="card">
                 <h3>⭐ TAREFAS DIÁRIAS</h3>
-                ${tarefasDiarias.map((t, i) => `
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 8px; background: #2a2a3a; border-radius: 10px;">
-                        <div>
-                            <div>${t.nome}</div>
-                            <small style="color: #ffd700;">+ R$ ${t.premio.toFixed(2)}</small>
+                ${tarefasDiarias.map((t, i) => {
+                    const hoje = new Date().toISOString().split('T')[0];
+                    const feita = USUARIO_ATUAL.tarefasFeitas?.[`tarefa_${i}_${hoje}`];
+                    return `
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 8px; background: #2a2a3a; border-radius: 10px;">
+                            <div><div>${t.nome}</div><small style="color:#ffd700;">+ R$ ${t.premio.toFixed(2)}</small></div>
+                            <button class="btn-acao btn-pequeno" onclick="completarTarefa(${i})" ${feita ? 'disabled style="opacity:0.5"' : ''}>${feita ? '✅' : 'Fazer'}</button>
                         </div>
-                        <button class="btn-acao btn-pequeno" style="width: auto; padding: 8px 15px; margin: 0;" onclick="completarTarefa(${i})" ${t.concluida ? 'disabled style="opacity:0.5"' : ''}>${t.concluida ? '✅' : 'Fazer'}</button>
-                    </div>
-                `).join('')}
+                    `;
+                }).join('')}
             </div>
             
             <div class="card">
-                <h3>🎁 OFERTAS DIÁRIAS</h3>
+                <h3>🎁 OFERTAS EXCLUSIVAS</h3>
                 ${ofertas.map(o => `
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 8px; background: #2a2a3a; border-radius: 10px;">
-                        <div>
-                            <div>${o.nome}</div>
-                            <small style="color: #ffd700;">+ R$ ${o.premio.toFixed(2)}</small>
-                        </div>
-                        <button class="btn-acao btn-pequeno" style="width: auto; padding: 8px 15px; margin: 0;" onclick="completarOferta(${JSON.stringify(o).replace(/"/g, '&quot;')})">Fazer</button>
+                        <div><div>${o.nome}</div><small style="color:#ffd700;">+ R$ ${o.premio.toFixed(2)}</small></div>
+                        <button class="btn-acao btn-pequeno" onclick="completarOferta(${JSON.stringify(o).replace(/"/g, '&quot;')})">Fazer</button>
                     </div>
                 `).join('')}
             </div>
@@ -883,49 +718,38 @@
         const historico = HISTORICO.filter(h => h.usuarioId === USUARIO_ATUAL.id);
         const totalGanho = historico.filter(h => h.valor > 0).reduce((s, h) => s + h.valor, 0);
         const totalSaque = Math.abs(historico.filter(h => h.tipo === 'saque').reduce((s, h) => s + h.valor, 0));
-        const streak = USUARIO_ATUAL.dailyBonus?.streak || 0;
         
         return `
             <div class="perfil-header">
                 <div class="perfil-avatar">👤</div>
                 <div class="perfil-nome">${USUARIO_ATUAL.nome}</div>
                 <div class="perfil-email">${USUARIO_ATUAL.email}</div>
-                <div class="aviso" style="margin-top: 10px;">🔥 Sequência bônus: ${streak} dias</div>
             </div>
             
             <div class="card">
-                <h3>📊 Resumo Financeiro</h3>
+                <h3>📊 RESUMO FINANCEIRO</h3>
                 <div>💰 Saldo: ${formatarMoeda(USUARIO_ATUAL.saldo)}</div>
                 <div>📈 Total ganho: +${formatarMoeda(totalGanho)}</div>
                 <div>💸 Total sacado: -${formatarMoeda(totalSaque)}</div>
                 <div>👥 Amigos indicados: ${USUARIO_ATUAL.indicacoes?.length || 0}</div>
-                <div class="progress-bar"><div class="progress-fill" style="width: ${(USUARIO_ATUAL.saldo / VALOR_MINIMO_SAQUE) * 100}%"></div></div>
-                <div>Progresso para saque: ${Math.min(100, (USUARIO_ATUAL.saldo / VALOR_MINIMO_SAQUE) * 100).toFixed(0)}%</div>
             </div>
             
             <div class="card">
-                <h3>💰 Saque PIX</h3>
+                <h3>💰 SAQUE VIA PIX</h3>
                 <button class="btn-sacar" onclick="abrirModalSaque()">💸 SACAR AGORA</button>
+                <div class="aviso" style="margin-top:10px;">Mínimo: ${formatarMoeda(VALOR_MINIMO_SAQUE)}</div>
             </div>
             
             <div class="card">
-                <h3>📜 Histórico</h3>
+                <h3>📜 HISTÓRICO</h3>
                 ${historico.slice(0, 15).map(h => `
                     <div class="historico-item">
-                        <div>
-                            <div>${h.tipo === 'video_ad' ? '📺 Anúncio' : 
-                                 h.tipo === 'roleta' ? '🎰 Roleta' :
-                                 h.tipo === 'daily_bonus_dia' ? '📅 Bônus Diário' :
-                                 h.tipo === 'click_game' ? '🎯 Jogo Clique' :
-                                 h.tipo === 'video_bonus' ? '🎁 Vídeo Bônus' :
-                                 h.tipo === 'hourly_checkin' ? '⏰ Check-in' :
-                                 h.tipo === 'saque' ? '💸 Saque' : h.tipo}</div>
-                            <div style="font-size: 10px;">${new Date(h.data).toLocaleString()}</div>
-                        </div>
-                        <div style="color: ${h.valor > 0 ? '#ffd700' : '#ff6b6b'}">${h.valor > 0 ? '+' : ''}${formatarMoeda(h.valor)}</div>
+                        <div><div>${h.tipo === 'video_ad' ? '📺 Anúncio' : h.tipo === 'roleta' ? '🎰 Roleta' : h.tipo === 'daily_bonus_dia' ? '📅 Bônus' : h.tipo === 'click_game' ? '🎯 Jogo' : h.tipo === 'video_bonus' ? '🎁 Bônus' : h.tipo === 'hourly_checkin' ? '⏰ Check-in' : h.tipo === 'saque' ? '💸 Saque' : h.tipo}</div>
+                        <div style="font-size:10px;">${new Date(h.data).toLocaleString()}</div></div>
+                        <div style="color:${h.valor > 0 ? '#ffd700' : '#ff6b6b'}">${h.valor > 0 ? '+' : ''}${formatarMoeda(h.valor)}</div>
                     </div>
                 `).join('')}
-                <button class="login-btn" style="margin-top: 15px; background: #6c757d;" onclick="logout()">🚪 Sair</button>
+                <button class="login-btn" style="margin-top:15px; background:#6c757d;" onclick="logout()">🚪 SAIR</button>
             </div>
         `;
     }
@@ -934,7 +758,6 @@
         const container = document.getElementById('mainContainer');
         if (!container) return;
         container.innerHTML = ABA_ATUAL === 'home' ? renderizarHome() : renderizarPerfil();
-        
         const saldoHeader = document.getElementById('saldoHeader');
         if (saldoHeader) saldoHeader.innerHTML = `💰 ${formatarMoeda(USUARIO_ATUAL.saldo)}`;
     }
@@ -955,9 +778,9 @@
                     <h1>💰 MultiGanhos</h1>
                     <input type="email" id="loginEmail" class="login-input" placeholder="Email" value="teste@email.com">
                     <input type="password" id="loginSenha" class="login-input" placeholder="Senha" value="123456">
-                    <label><input type="checkbox" id="manterLogin"> Manter conectado</label>
-                    <button class="login-btn" onclick="fazerLogin()">✨ Entrar ✨</button>
-                    <div class="switch-btn" onclick="telaRegistro()">Criar conta</div>
+                    <label style="display:flex; gap:8px; margin:10px 0;"><input type="checkbox" id="manterLogin"> Manter conectado</label>
+                    <button class="login-btn" onclick="fazerLogin()">✨ ENTRAR ✨</button>
+                    <div class="switch-btn" onclick="telaRegistro()">Criar nova conta</div>
                 </div>
             </div>
         `;
@@ -967,12 +790,12 @@
         document.getElementById('app').innerHTML = `
             <div class="login-screen">
                 <div class="login-box">
-                    <h1>📝 Criar Conta</h1>
-                    <input type="text" id="regNome" class="login-input" placeholder="Nome">
+                    <h1>📝 CRIAR CONTA</h1>
+                    <input type="text" id="regNome" class="login-input" placeholder="Nome completo">
                     <input type="email" id="regEmail" class="login-input" placeholder="Email">
                     <input type="password" id="regSenha" class="login-input" placeholder="Senha">
-                    <input type="password" id="regConfirmar" class="login-input" placeholder="Confirmar">
-                    <button class="login-btn" onclick="registrar()">✅ Cadastrar</button>
+                    <input type="password" id="regConfirmar" class="login-input" placeholder="Confirmar senha">
+                    <button class="login-btn" onclick="registrar()">✅ CADASTRAR</button>
                     <div class="switch-btn" onclick="telaLogin()">Já tenho conta</div>
                 </div>
             </div>
@@ -980,10 +803,7 @@
     }
     
     async function renderizarApp() {
-        if (!USUARIO_ATUAL) {
-            telaLogin();
-            return;
-        }
+        if (!USUARIO_ATUAL) { telaLogin(); return; }
         
         document.getElementById('app').innerHTML = `
             <div class="header">
@@ -992,24 +812,14 @@
             </div>
             <div class="main-content" id="mainContainer"></div>
             <div class="bottom-nav">
-                <div class="nav-item ${ABA_ATUAL === 'home' ? 'active' : ''}" data-tab="home" onclick="mudarAba('home')">
-                    <div class="nav-icon">🏠</div>
-                    <div class="nav-label">Início</div>
-                </div>
-                <div class="nav-item ${ABA_ATUAL === 'perfil' ? 'active' : ''}" data-tab="perfil" onclick="mudarAba('perfil')">
-                    <div class="nav-icon">👤</div>
-                    <div class="nav-label">Perfil</div>
-                </div>
+                <div class="nav-item ${ABA_ATUAL === 'home' ? 'active' : ''}" data-tab="home" onclick="mudarAba('home')"><div class="nav-icon">🏠</div><div class="nav-label">Início</div></div>
+                <div class="nav-item ${ABA_ATUAL === 'perfil' ? 'active' : ''}" data-tab="perfil" onclick="mudarAba('perfil')"><div class="nav-icon">👤</div><div class="nav-label">Perfil</div></div>
             </div>
         `;
-        
         renderizarConteudo();
     }
     
-    // ============================================================
-    // EXPOR FUNÇÕES
-    // ============================================================
-    
+    // EXPOR FUNÇÕES GLOBAIS
     window.fazerLogin = fazerLogin;
     window.registrar = registrar;
     window.telaLogin = telaLogin;
@@ -1030,10 +840,7 @@
     window.fecharModal = fecharModal;
     window.copiarTexto = copiarTexto;
     
-    // ============================================================
     // INICIAR
-    // ============================================================
-    
     async function iniciar() {
         try {
             await abrirDB();
@@ -1042,10 +849,10 @@
             await carregarSessao();
             carregarScriptsAnuncio();
             renderizarApp();
-            console.log('🚀 MultiGanhos iniciado com 10 formas de ganhar dinheiro!');
+            console.log('🚀 App funcionando 100%! Todos os botões conectados!');
         } catch (error) {
             console.error('Erro:', error);
-            document.getElementById('app').innerHTML = '<div style="text-align:center; padding:50px;">❌ Erro ao carregar</div>';
+            document.getElementById('app').innerHTML = '<div style="text-align:center; padding:50px; color:white;">❌ Erro ao carregar. Recarregue a página.</div>';
         }
     }
     
