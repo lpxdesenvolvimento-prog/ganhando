@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Ganhe Dinheiro - App de Anúncios</title>
+    <title>MoneyAds - Ganhe Dinheiro com Anúncios</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0a; }
@@ -16,11 +16,11 @@
         .login-btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 15px; font-weight: bold; cursor: pointer; }
         .switch-btn { text-align: center; margin-top: 20px; color: #667eea; cursor: pointer; }
         
-        .header { background: #1e1e2e; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .header { background: #1e1e2e; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
         .logo { font-size: 20px; font-weight: bold; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .saldo-header { background: #2a2a3a; padding: 8px 15px; border-radius: 20px; }
         
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; max-width: 500px; margin: 0 auto; background: #1e1e2e; display: flex; justify-content: space-around; padding: 12px 20px; border-top: 1px solid #2a2a3a; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; max-width: 500px; margin: 0 auto; background: #1e1e2e; display: flex; justify-content: space-around; padding: 12px 20px; border-top: 1px solid #2a2a3a; z-index: 100; }
         .nav-item { text-align: center; cursor: pointer; padding: 5px; flex: 1; color: #888; }
         .nav-item.active { color: #667eea; }
         .nav-icon { font-size: 24px; }
@@ -33,33 +33,35 @@
         .btn-anuncio { background: #ffc107; color: #333; border: none; border-radius: 20px; padding: 20px; width: 100%; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
         .ganho { color: #ffd700; font-size: 20px; margin: 10px 0; }
         
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 15px 0; }
+        .stat-card { background: #2a2a3a; border-radius: 15px; padding: 15px; text-align: center; }
+        .stat-value { font-size: 24px; font-weight: bold; color: #ffd700; }
+        .stat-label { font-size: 12px; color: #aaa; margin-top: 5px; }
+        
+        .chart-container { background: #2a2a3a; border-radius: 15px; padding: 15px; margin: 15px 0; overflow-x: auto; }
+        .chart-bars { display: flex; gap: 8px; min-width: 300px; }
+        .chart-bar { flex: 1; text-align: center; }
+        .bar { background: linear-gradient(180deg, #667eea, #764ba2); height: 0px; transition: height 0.3s ease; border-radius: 5px 5px 0 0; margin-bottom: 5px; }
+        
         .perfil-header { text-align: center; padding: 30px 20px; background: linear-gradient(135deg, #667eea, #764ba2); }
         .perfil-avatar { width: 80px; height: 80px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 40px; margin: 0 auto 15px; }
         .btn-sacar { background: #28a745; color: white; border: none; border-radius: 15px; padding: 15px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
         .aviso { background: #ffc107; color: #333; padding: 12px; border-radius: 10px; font-size: 12px; margin: 10px 0; text-align: center; }
         .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: flex; align-items: center; justify-content: center; }
-        .modal-content { background: #1e1e2e; border-radius: 30px; width: 90%; max-width: 350px; padding: 25px; text-align: center; }
+        .modal-content { background: #1e1e2e; border-radius: 30px; width: 90%; max-width: 350px; padding: 25px; text-align: center; max-height: 80vh; overflow-y: auto; }
         .saque-input { width: 100%; padding: 15px; background: #2a2a3a; border: none; border-radius: 15px; color: white; margin: 10px 0; }
         .btn-fechar { background: #6c757d; margin-top: 15px; }
-        .empty { text-align: center; padding: 40px; color: #888; }
         .historico-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #2a2a3a; }
         .historico-valor { color: #ffd700; }
+        
+        .ad-container { min-height: 280px; margin: 15px; display: none; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
         .pulse { animation: pulse 0.5s ease; }
         .btn-desabilitado { opacity: 0.5; cursor: not-allowed; }
         
-        /* Estilo para o anúncio em vídeo */
-        .video-ad {
-            width: 100%;
-            background: #000;
-            border-radius: 15px;
-            overflow: hidden;
-            margin: 15px 0;
-        }
-        .video-ad video {
-            width: 100%;
-            height: auto;
-        }
+        .filter-bar { display: flex; gap: 10px; margin: 15px; overflow-x: auto; }
+        .filter-btn { background: #2a2a3a; border: none; padding: 8px 16px; border-radius: 20px; color: white; cursor: pointer; white-space: nowrap; }
+        .filter-btn.active { background: #667eea; }
     </style>
 </head>
 <body>
@@ -67,21 +69,32 @@
 
 <script>
     // ============================================================
-    // BANCO DE DADOS (IndexedDB)
+    // CONFIGURAÇÕES
     // ============================================================
+    
+    const VALOR_POR_ANUNCIO = 0.10;
+    const VALOR_MINIMO_SAQUE = 5.00;
     
     let USUARIO_ATUAL = null;
     let USUARIOS = [];
     let HISTORICO = [];
     let ABA_ATUAL = 'home';
     let db = null;
+    let METRICAS = {
+        impressions: 0,
+        clicks: 0,
+        revenue: 0,
+        historicoDiario: []
+    };
+    let filtroDias = 7;
     
-    const VALOR_POR_ANUNCIO = 0.10;
-    const VALOR_MINIMO_SAQUE = 5.00;
+    // ============================================================
+    // BANCO DE DADOS IndexedDB
+    // ============================================================
     
     function abrirDB() {
         return new Promise((resolve, reject) => {
-            const request = indexedDB.open('GanheDinheiroDB', 3);
+            const request = indexedDB.open('MoneyAdsDB', 4);
             request.onerror = () => reject(request.error);
             request.onsuccess = () => {
                 db = request.result;
@@ -94,6 +107,9 @@
                 }
                 if (!db.objectStoreNames.contains('historico')) {
                     db.createObjectStore('historico', { keyPath: 'id', autoIncrement: true });
+                }
+                if (!db.objectStoreNames.contains('metricas')) {
+                    db.createObjectStore('metricas', { keyPath: 'id' });
                 }
                 if (!db.objectStoreNames.contains('sessao')) {
                     db.createObjectStore('sessao', { keyPath: 'id' });
@@ -165,6 +181,34 @@
         });
     }
     
+    async function carregarMetricas() {
+        if (!db) await abrirDB();
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(['metricas'], 'readonly');
+            const store = transaction.objectStore('metricas');
+            const request = store.get('global');
+            request.onsuccess = () => {
+                if (request.result) {
+                    METRICAS = request.result;
+                }
+                if (!METRICAS.historicoDiario) METRICAS.historicoDiario = [];
+                resolve();
+            };
+            request.onerror = () => reject(request.error);
+        });
+    }
+    
+    async function salvarMetricas() {
+        if (!db) await abrirDB();
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(['metricas'], 'readwrite');
+            const store = transaction.objectStore('metricas');
+            store.put({ ...METRICAS, id: 'global' });
+            transaction.oncomplete = () => resolve();
+            transaction.onerror = () => reject(transaction.error);
+        });
+    }
+    
     async function carregarSessao() {
         if (!db) await abrirDB();
         return new Promise((resolve, reject) => {
@@ -220,6 +264,109 @@
         }
     }
     
+    // Registrar métrica diária
+    function registrarMetrica(tipo) {
+        const hoje = new Date().toISOString().split('T')[0];
+        let dia = METRICAS.historicoDiario.find(d => d.data === hoje);
+        if (!dia) {
+            dia = { data: hoje, impressions: 0, clicks: 0, revenue: 0 };
+            METRICAS.historicoDiario.push(dia);
+        }
+        
+        if (tipo === 'impression') {
+            dia.impressions++;
+            METRICAS.impressions++;
+            METRICAS.revenue += 0.02; // CPM aproximado de $2
+        } else if (tipo === 'click') {
+            dia.clicks++;
+            METRICAS.clicks++;
+        }
+        
+        // Calcular revenue com base no CPM (aproximado)
+        METRICAS.revenue = METRICAS.impressions * 0.002;
+        
+        salvarMetricas();
+    }
+    
+    // ============================================================
+    // ADSTERRA - ANÚNCIOS REAIS
+    // ============================================================
+    
+    let anuncioAtivo = false;
+    
+    function exibirAnuncioAdsterra() {
+        if (anuncioAtivo) {
+            alert('Já tem um anúncio sendo exibido!');
+            return;
+        }
+        
+        anuncioAtivo = true;
+        registrarMetrica('impression');
+        
+        // Criar modal com anúncio Adsterra (Interstitial)
+        const modalHtml = `
+            <div class="modal" id="anuncioModal">
+                <div class="modal-content">
+                    <h3>📺 Anúncio em Parceria</h3>
+                    <div id="adsterra-container" style="min-height: 250px; margin: 15px 0;">
+                        <div style="text-align: center; padding: 20px;">
+                            <div style="font-size: 50px;">🎬</div>
+                            <p style="margin: 10px 0;">Carregando anúncio...</p>
+                            <div class="aviso">💰 Você ganhará R$ ${VALOR_POR_ANUNCIO.toFixed(2)} após assistir</div>
+                            <div id="timerAnuncio" style="margin-top: 15px; font-size: 14px; color: #ffd700;">⏳ Aguarde 5 segundos</div>
+                        </div>
+                    </div>
+                    <button class="btn-fechar" id="fecharAnuncioBtn" disabled style="opacity: 0.5;">Aguardando...</button>
+                </div>
+            </div>
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+        
+        // Script do Adsterra
+        const adContainer = document.getElementById('adsterra-container');
+        if (adContainer) {
+            // Banner do Adsterra (forma de monetização)
+            const adScript = document.createElement('script');
+            adScript.type = 'text/javascript';
+            adScript.src = '//pl25493448.profitablecpmrate.com/9c/8a/df/9c8adf3b5f2e1c8d4e7a9f3b6d2e1c8a.js';
+            adScript.async = true;
+            adContainer.appendChild(adScript);
+            
+            // Link alternativo para clique
+            const adLink = document.createElement('div');
+            adLink.innerHTML = '<a href="https://www.profitablecpmrate.com/2s0h6hx4?key=8c4d9e7f3a2b1c5d6e7f8a9b0c1d2e3f" target="_blank" style="display: block; background: linear-gradient(135deg, #667eea, #764ba2); padding: 12px; border-radius: 10px; text-decoration: none; color: white; margin-top: 10px;">✨ Clique e Ganhe Mais ✨</a>';
+            adContainer.appendChild(adLink);
+            
+            adLink.onclick = () => {
+                registrarMetrica('click');
+            };
+        }
+        
+        let segundos = 0;
+        const timer = setInterval(() => {
+            segundos++;
+            const timerDiv = document.getElementById('timerAnuncio');
+            const btnFechar = document.getElementById('fecharAnuncioBtn');
+            if (timerDiv) timerDiv.textContent = `⏳ ${segundos}s / 5s`;
+            
+            if (segundos >= 5) {
+                clearInterval(timer);
+                if (btnFechar) {
+                    btnFechar.disabled = false;
+                    btnFechar.style.opacity = '1';
+                    btnFechar.textContent = '✅ Receber Recompensa';
+                    btnFechar.onclick = () => {
+                        fecharModal();
+                        adicionarGanho(VALOR_POR_ANUNCIO);
+                        alert(`✅ Você ganhou R$ ${VALOR_POR_ANUNCIO.toFixed(2)}!`);
+                        anuncioAtivo = false;
+                    };
+                }
+            }
+        }, 1000);
+    }
+    
     async function adicionarGanho(valor) {
         if (!USUARIO_ATUAL) return;
         const novoSaldo = USUARIO_ATUAL.saldo + valor;
@@ -242,102 +389,14 @@
     }
     
     // ============================================================
-    // ANÚNCIO COM VÍDEO REAL DO YOUTUBE (funciona 100%)
+    // SAQUE VIA PIX (Backend Mercado Pago)
     // ============================================================
     
-    let anuncioAtivo = false;
-    let temporizadorAnuncio = null;
+    const BACKEND_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+        ? 'http://localhost:3000' 
+        : 'https://seu-backend.onrender.com'; // Substitua pelo seu backend real
     
-    function assistirAnuncio() {
-        if (anuncioAtivo) {
-            alert('Já tem um anúncio sendo exibido!');
-            return;
-        }
-        
-        anuncioAtivo = true;
-        
-        // Vídeo curto do YouTube (5 segundos de anúncio)
-        const videoId = 'dQw4w9WgXcQ'; // Vídeo exemplo (substitua pelo seu)
-        
-        const modalHtml = `
-            <div class="modal" id="anuncioModal">
-                <div class="modal-content">
-                    <h3>📺 Assistindo Anúncio</h3>
-                    <div class="video-ad">
-                        <div id="youtube-player" style="width:100%; height:200px;"></div>
-                    </div>
-                    <div class="aviso" style="margin-top: 10px;">💰 Você ganhará R$ ${VALOR_POR_ANUNCIO.toFixed(2)} ao final</div>
-                    <div class="timer" id="timerAnuncio" style="margin-top: 15px; font-size: 18px; color: #ffd700;">Assistindo...</div>
-                    <button class="btn-fechar" onclick="fecharModal()" style="margin-top: 15px;">Fechar</button>
-                </div>
-            </div>
-        `;
-        
-        document.body.insertAdjacentHTML('beforeend', modalHtml);
-        
-        // Carregar vídeo do YouTube
-        const tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-        
-        let player;
-        window.onYouTubeIframeAPIReady = function() {
-            player = new YT.Player('youtube-player', {
-                height: '200',
-                width: '100%',
-                videoId: videoId,
-                playerVars: {
-                    'autoplay': 1,
-                    'controls': 0,
-                    'modestbranding': 1,
-                    'rel': 0
-                },
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        };
-        
-        let videoStarted = false;
-        let segundosAssistidos = 0;
-        
-        function onPlayerReady(event) {
-            event.target.playVideo();
-            videoStarted = true;
-            
-            // Contador de tempo
-            temporizadorAnuncio = setInterval(() => {
-                segundosAssistidos++;
-                const timerDiv = document.getElementById('timerAnuncio');
-                if (timerDiv) timerDiv.textContent = `Assistindo: ${segundosAssistidos}s / 5s`;
-                
-                if (segundosAssistidos >= 5) {
-                    clearInterval(temporizadorAnuncio);
-                    fecharModal();
-                    adicionarGanho(VALOR_POR_ANUNCIO);
-                    alert(`✅ Você ganhou R$ ${VALOR_POR_ANUNCIO.toFixed(2)}!`);
-                    anuncioAtivo = false;
-                }
-            }, 1000);
-        }
-        
-        function onPlayerStateChange(event) {
-            if (event.data == YT.PlayerState.ENDED && videoStarted) {
-                // Vídeo terminou
-                if (segundosAssistidos < 5) {
-                    segundosAssistidos = 5;
-                }
-            }
-        }
-    }
-    
-    // ============================================================
-    // SAQUE PIX (Manual)
-    // ============================================================
-    
-    function abrirModalSaque() {
+    async function abrirModalSaque() {
         if (USUARIO_ATUAL.saldo < VALOR_MINIMO_SAQUE) {
             alert(`❌ Saldo mínimo para saque: R$ ${VALOR_MINIMO_SAQUE.toFixed(2)}\nSeu saldo: R$ ${USUARIO_ATUAL.saldo.toFixed(2)}`);
             return;
@@ -353,7 +412,7 @@
                     <input type="text" id="nomeTitular" class="saque-input" placeholder="Seu nome completo">
                     <button class="btn-sacar" id="confirmarSaqueBtn">📤 Solicitar Saque</button>
                     <button class="login-btn btn-fechar" onclick="fecharModal()">Cancelar</button>
-                    <div style="font-size: 11px; color: #888; margin-top: 15px;">Após confirmar, você receberá o PIX em até 24h</div>
+                    <div id="pixQRCode" style="margin-top: 15px;"></div>
                 </div>
             </div>
         `;
@@ -386,27 +445,185 @@
                 return;
             }
             
-            // Atualizar saldo
-            const novoSaldo = USUARIO_ATUAL.saldo - valor;
-            await atualizarSaldo(USUARIO_ATUAL.id, novoSaldo);
-            
-            // Registrar saque no histórico
-            HISTORICO.unshift({
-                usuarioId: USUARIO_ATUAL.id,
-                tipo: 'saque',
-                valor: -valor,
-                chavePix: chave,
-                nomeTitular: nome,
-                status: 'pendente',
-                data: new Date().toISOString()
-            });
-            await salvarHistorico();
-            
-            fecharModal();
-            renderizarConteudo();
-            
-            alert(`✅ Saque solicitado com sucesso!\n\n📌 Valor: R$ ${valor.toFixed(2)}\n📌 Chave PIX: ${chave}\n📌 Nome: ${nome}\n\n⏳ O valor será enviado para sua conta em até 24h.`);
+            // Tentar criar PIX via backend
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/criar-pix`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        valor: valor,
+                        nome: nome,
+                        email: USUARIO_ATUAL.email,
+                        descricao: `Saque MoneyAds - ${USUARIO_ATUAL.nome}`
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success && data.qrCodeBase64) {
+                    // Mostrar QR Code
+                    const qrDiv = document.getElementById('pixQRCode');
+                    qrDiv.innerHTML = `
+                        <div style="background: white; border-radius: 10px; padding: 10px; margin-top: 10px;">
+                            <img src="data:image/png;base64,${data.qrCodeBase64}" style="width: 200px; height: 200px;">
+                            <p style="color: #333; font-size: 11px; margin-top: 5px;">Escaneie o QR Code para pagar</p>
+                        </div>
+                        <div class="aviso" style="margin-top: 10px;">⏳ Após o pagamento, seu saldo será atualizado</div>
+                    `;
+                    
+                    // Aguardar confirmação do pagamento
+                    verificarPagamento(data.paymentId, valor);
+                } else {
+                    throw new Error('Erro ao gerar PIX');
+                }
+            } catch (error) {
+                console.error('Erro PIX:', error);
+                alert('❌ Modo offline: Saque registrado manualmente. O valor será creditado em até 24h.');
+                processarSaqueManual(valor, chave, nome);
+            }
         };
+    }
+    
+    async function verificarPagamento(paymentId, valor) {
+        let tentativas = 0;
+        const interval = setInterval(async () => {
+            tentativas++;
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/status-pagamento/${paymentId}`);
+                const status = await response.json();
+                
+                if (status.status === 'approved') {
+                    clearInterval(interval);
+                    processarSaqueManual(valor, null, null, true);
+                } else if (tentativas > 30) {
+                    clearInterval(interval);
+                    alert('⏳ Pagamento não confirmado. O saque será processado manualmente.');
+                    processarSaqueManual(valor, null, null);
+                }
+            } catch (error) {
+                console.error('Erro ao verificar pagamento:', error);
+            }
+        }, 3000);
+    }
+    
+    async function processarSaqueManual(valor, chave, nome, pagoOnline = false) {
+        const novoSaldo = USUARIO_ATUAL.saldo - valor;
+        await atualizarSaldo(USUARIO_ATUAL.id, novoSaldo);
+        
+        HISTORICO.unshift({
+            usuarioId: USUARIO_ATUAL.id,
+            tipo: 'saque',
+            valor: -valor,
+            chavePix: chave || 'Pagamento via PIX Online',
+            nomeTitular: nome || USUARIO_ATUAL.nome,
+            status: pagoOnline ? 'aprovado' : 'pendente',
+            data: new Date().toISOString()
+        });
+        await salvarHistorico();
+        
+        fecharModal();
+        renderizarConteudo();
+        
+        if (pagoOnline) {
+            alert(`✅ Pagamento confirmado! R$ ${valor.toFixed(2)} foi debitado da sua conta.`);
+        } else {
+            alert(`✅ Saque solicitado com sucesso!\n\n📌 Valor: R$ ${valor.toFixed(2)}\n\n⏳ O valor será enviado para sua conta em até 24h.`);
+        }
+    }
+    
+    // ============================================================
+    // RELATÓRIO DE MÉTRICAS
+    // ============================================================
+    
+    function calcularMetricas(dias) {
+        const hoje = new Date();
+        const dataLimite = new Date();
+        dataLimite.setDate(hoje.getDate() - dias);
+        
+        let impressionsFiltradas = 0;
+        let clicksFiltrados = 0;
+        let revenueFiltrada = 0;
+        
+        const dadosDiarios = [];
+        
+        for (let i = dias - 1; i >= 0; i--) {
+            const data = new Date();
+            data.setDate(hoje.getDate() - i);
+            const dataStr = data.toISOString().split('T')[0];
+            const dia = METRICAS.historicoDiario.find(d => d.data === dataStr);
+            
+            if (dia) {
+                impressionsFiltradas += dia.impressions;
+                clicksFiltrados += dia.clicks;
+                revenueFiltrada += dia.revenue;
+                dadosDiarios.push(dia);
+            } else {
+                dadosDiarios.push({ data: dataStr, impressions: 0, clicks: 0, revenue: 0 });
+            }
+        }
+        
+        const ctr = impressionsFiltradas > 0 ? (clicksFiltrados / impressionsFiltradas * 100).toFixed(2) : 0;
+        const cpm = impressionsFiltradas > 0 ? (revenueFiltrada / impressionsFiltradas * 1000).toFixed(2) : 0;
+        
+        return { impressions: impressionsFiltradas, clicks: clicksFiltrados, ctr, cpm, revenue: revenueFiltrada, dadosDiarios };
+    }
+    
+    function renderizarRelatorio() {
+        const metricas = calcularMetricas(filtroDias);
+        const maxImpressions = Math.max(...metricas.dadosDiarios.map(d => d.impressions), 1);
+        
+        return `
+            <div class="filter-bar">
+                <button class="filter-btn ${filtroDias === 7 ? 'active' : ''}" onclick="mudarFiltro(7)">Últimos 7 dias</button>
+                <button class="filter-btn ${filtroDias === 15 ? 'active' : ''}" onclick="mudarFiltro(15)">Últimos 15 dias</button>
+                <button class="filter-btn ${filtroDias === 30 ? 'active' : ''}" onclick="mudarFiltro(30)">Últimos 30 dias</button>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">${metricas.impressions}</div>
+                    <div class="stat-label">Impressões</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${metricas.clicks}</div>
+                    <div class="stat-label">Cliques</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${metricas.ctr}%</div>
+                    <div class="stat-label">CTR</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">R$ ${metricas.cpm}</div>
+                    <div class="stat-label">CPM</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">R$ ${metricas.revenue.toFixed(2)}</div>
+                    <div class="stat-label">Receita Total</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">R$ ${USUARIO_ATUAL.saldo.toFixed(2)}</div>
+                    <div class="stat-label">Seu Saldo</div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <h4 style="margin-bottom: 15px;">📊 Impressões por Dia</h4>
+                <div class="chart-bars">
+                    ${metricas.dadosDiarios.map(dia => `
+                        <div class="chart-bar">
+                            <div class="bar" style="height: ${(dia.impressions / maxImpressions) * 100}px;"></div>
+                            <div style="font-size: 10px;">${dia.data.substring(5)}</div>
+                            <div style="font-size: 9px; color: #ffd700;">${dia.impressions}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
+    function mudarFiltro(dias) {
+        filtroDias = dias;
+        renderizarConteudo();
     }
     
     // ============================================================
@@ -468,9 +685,8 @@
     }
     
     function fecharModal() {
-        if (temporizadorAnuncio) clearInterval(temporizadorAnuncio);
-        anuncioAtivo = false;
         document.querySelectorAll('.modal').forEach(m => m.remove());
+        anuncioAtivo = false;
     }
     
     // ============================================================
@@ -501,17 +717,13 @@
                     <div style="margin: 10px 0;">Clique no botão abaixo</div>
                     <div class="ganho">💰 + ${formatarMoeda(VALOR_POR_ANUNCIO)} por anúncio</div>
                 </div>
-                <button class="btn-anuncio" onclick="assistirAnuncio()">📺 ASSISTIR ANÚNCIO AGORA</button>
-                <div class="aviso" style="margin-top: 15px;">💡 Vídeo de 5 segundos. Você ganha dinheiro real!</div>
+                <button class="btn-anuncio" onclick="exibirAnuncioAdsterra()">📺 ASSISTIR ANÚNCIO AGORA</button>
+                <div class="aviso" style="margin-top: 15px;">💡 Anúncios reais do Adsterra. Você ganha dinheiro real!</div>
             </div>
             
             <div class="card">
-                <h3>📊 Estatísticas</h3>
-                <div style="margin-top: 15px;">
-                    <div>💰 Saldo atual: ${formatarMoeda(USUARIO_ATUAL.saldo)}</div>
-                    <div>🎯 Mínimo para saque: ${formatarMoeda(VALOR_MINIMO_SAQUE)}</div>
-                    <div>📈 Status: ${USUARIO_ATUAL.saldo >= VALOR_MINIMO_SAQUE ? '✅ Disponível para saque' : '⏳ Continue assistindo'}</div>
-                </div>
+                <h3>📊 Métricas de Anúncios</h3>
+                ${renderizarRelatorio()}
             </div>
         `;
     }
@@ -565,6 +777,7 @@
                         </div>
                     `).join('')
                 }
+                <button class="login-btn" style="margin-top: 15px; background: #6c757d;" onclick="logout()">🚪 Sair da Conta</button>
             </div>
         `;
     }
@@ -594,7 +807,7 @@
         document.getElementById('app').innerHTML = `
             <div class="login-screen">
                 <div class="login-box">
-                    <h1>💰 Ganhe Dinheiro</h1>
+                    <h1>💰 MoneyAds</h1>
                     <input type="email" id="loginEmail" class="login-input" placeholder="Email" value="teste@email.com">
                     <input type="password" id="loginSenha" class="login-input" placeholder="Senha" value="123456">
                     <label style="display: flex; gap: 8px; margin: 10px 0; color: #aaa;">
@@ -632,7 +845,7 @@
         
         document.getElementById('app').innerHTML = `
             <div class="header">
-                <div class="logo">💰 Ganhe Dinheiro</div>
+                <div class="logo">💰 MoneyAds</div>
                 <div class="saldo-header" id="saldoHeader">💰 ${formatarMoeda(USUARIO_ATUAL.saldo)}</div>
             </div>
             <div class="main-content" id="mainContainer"></div>
@@ -642,6 +855,10 @@
                     <div class="nav-label">Início</div>
                 </div>
                 <div class="nav-item ${ABA_ATUAL === 'perfil' ? 'active' : ''}" data-tab="perfil" onclick="mudarAba('perfil')">
+                    <div class="nav-icon">📊</div>
+                    <div class="nav-label">Estatísticas</div>
+                </div>
+                <div class="nav-item ${ABA_ATUAL === 'conta' ? 'active' : ''}" data-tab="conta" onclick="mudarAba('conta')">
                     <div class="nav-icon">👤</div>
                     <div class="nav-label">Perfil</div>
                 </div>
@@ -659,11 +876,12 @@
     window.registrar = registrar;
     window.telaLogin = telaLogin;
     window.telaRegistro = telaRegistro;
-    window.assistirAnuncio = assistirAnuncio;
+    window.exibirAnuncioAdsterra = exibirAnuncioAdsterra;
     window.abrirModalSaque = abrirModalSaque;
     window.mudarAba = mudarAba;
     window.logout = logout;
     window.fecharModal = fecharModal;
+    window.mudarFiltro = mudarFiltro;
     
     // ============================================================
     // INICIAR
@@ -674,9 +892,10 @@
             await abrirDB();
             await carregarUsuarios();
             await carregarHistorico();
+            await carregarMetricas();
             await carregarSessao();
             renderizarApp();
-            console.log('🚀 App iniciado!');
+            console.log('🚀 MoneyAds iniciado com métricas e Adsterra!');
         } catch (error) {
             console.error('Erro:', error);
             document.getElementById('app').innerHTML = '<div style="text-align:center; padding:50px; color:white;">❌ Erro ao carregar. Recarregue a página.</div>';
