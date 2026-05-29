@@ -30,18 +30,14 @@
         .card { background: #1e1e2e; border-radius: 20px; padding: 20px; margin: 15px; }
         .saldo-card { background: linear-gradient(135deg, #667eea, #764ba2); text-align: center; }
         .saldo-valor { font-size: 48px; font-weight: bold; margin: 10px 0; }
-        .btn-anuncio { background: #ffc107; color: #333; border: none; border-radius: 20px; padding: 20px; width: 100%; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-anuncio { background: #ffc107; color: #333; border: none; border-radius: 20px; padding: 20px; width: 100%; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: transform 0.2s; }
+        .btn-anuncio:active { transform: scale(0.98); }
         .ganho { color: #ffd700; font-size: 20px; margin: 10px 0; }
         
         .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 15px 0; }
         .stat-card { background: #2a2a3a; border-radius: 15px; padding: 15px; text-align: center; }
         .stat-value { font-size: 24px; font-weight: bold; color: #ffd700; }
         .stat-label { font-size: 12px; color: #aaa; margin-top: 5px; }
-        
-        .chart-container { background: #2a2a3a; border-radius: 15px; padding: 15px; margin: 15px 0; overflow-x: auto; }
-        .chart-bars { display: flex; gap: 8px; min-width: 300px; }
-        .chart-bar { flex: 1; text-align: center; }
-        .bar { background: linear-gradient(180deg, #667eea, #764ba2); height: 0px; transition: height 0.3s ease; border-radius: 5px 5px 0 0; margin-bottom: 5px; }
         
         .perfil-header { text-align: center; padding: 30px 20px; background: linear-gradient(135deg, #667eea, #764ba2); }
         .perfil-avatar { width: 80px; height: 80px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 40px; margin: 0 auto 15px; }
@@ -50,18 +46,16 @@
         .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: flex; align-items: center; justify-content: center; }
         .modal-content { background: #1e1e2e; border-radius: 30px; width: 90%; max-width: 350px; padding: 25px; text-align: center; max-height: 80vh; overflow-y: auto; }
         .saque-input { width: 100%; padding: 15px; background: #2a2a3a; border: none; border-radius: 15px; color: white; margin: 10px 0; }
-        .btn-fechar { background: #6c757d; margin-top: 15px; }
+        .btn-fechar { background: #6c757d; margin-top: 15px; padding: 12px 24px; border: none; border-radius: 15px; color: white; cursor: pointer; }
         .historico-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #2a2a3a; }
         .historico-valor { color: #ffd700; }
         
-        .ad-container { min-height: 280px; margin: 15px; display: none; }
+        .ad-container { margin: 15px 0; text-align: center; }
+        .timer-circle { width: 60px; height: 60px; border-radius: 50%; background: #2a2a3a; display: flex; align-items: center; justify-content: center; margin: 10px auto; font-size: 24px; font-weight: bold; color: #ffd700; }
+        
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
         .pulse { animation: pulse 0.5s ease; }
         .btn-desabilitado { opacity: 0.5; cursor: not-allowed; }
-        
-        .filter-bar { display: flex; gap: 10px; margin: 15px; overflow-x: auto; }
-        .filter-btn { background: #2a2a3a; border: none; padding: 8px 16px; border-radius: 20px; color: white; cursor: pointer; white-space: nowrap; }
-        .filter-btn.active { background: #667eea; }
     </style>
 </head>
 <body>
@@ -69,10 +63,75 @@
 
 <script>
     // ============================================================
-    // CONFIGURAÇÕES
+    // SEUS CÓDIGOS DE ANÚNCIO INTEGRADOS
     // ============================================================
     
-    const VALOR_POR_ANUNCIO = 0.10;
+    // Carregar todos os scripts de anúncio
+    function carregarScriptsAnuncio() {
+        // Script 1 - Effective CPM Network
+        const script1 = document.createElement('script');
+        script1.src = "https://pl29544299.effectivecpmnetwork.com/13/89/78/1389780ab59df29b5a18260e66775ac9.js";
+        document.head.appendChild(script1);
+        
+        // Script 2
+        const script2 = document.createElement('script');
+        script2.src = "https://pl29577630.effectivecpmnetwork.com/f133ca3c947a6a58ef247933ba24fcc1/invoke.js";
+        script2.async = true;
+        script2.setAttribute('data-cfasync', 'false');
+        document.head.appendChild(script2);
+        
+        // Script 3 - HighPerformanceFormat
+        const script3 = document.createElement('script');
+        script3.src = "https://www.highperformanceformat.com/7af4a01bf6a9d4d9456c24dd6353c2b1/invoke.js";
+        document.head.appendChild(script3);
+        
+        // Script 4
+        const script4 = document.createElement('script');
+        script4.src = "https://www.highperformanceformat.com/534d8a894d172b3dfce040e7427813b4/invoke.js";
+        document.head.appendChild(script4);
+        
+        // Script 5
+        const script5 = document.createElement('script');
+        script5.src = "https://www.highperformanceformat.com/fff7a36c088dd5b47badfd20122227c6/invoke.js";
+        document.head.appendChild(script5);
+        
+        // Script 6
+        const script6 = document.createElement('script');
+        script6.src = "https://www.highperformanceformat.com/e2528a1d355b10b68860b8cdbcef6778/invoke.js";
+        document.head.appendChild(script6);
+        
+        // Script 7
+        const script7 = document.createElement('script');
+        script7.src = "https://www.highperformanceformat.com/abcaa532d3cf68d02df8324ba88e8c3a/invoke.js";
+        document.head.appendChild(script7);
+        
+        // Script 8
+        const script8 = document.createElement('script');
+        script8.src = "https://www.highperformanceformat.com/2093eb5d6b44dffa2047de2821a66b9c/invoke.js";
+        document.head.appendChild(script8);
+        
+        // Script 9
+        const script9 = document.createElement('script');
+        script9.src = "https://pl29577637.effectivecpmnetwork.com/62/57/8d/62578d2c11a0498b5c7d84e73c05b8ff.js";
+        document.head.appendChild(script9);
+        
+        console.log('✅ Todos os scripts de anúncio carregados!');
+    }
+    
+    // Configurações globais dos anúncios
+    window.atOptions = {
+        'key': '7af4a01bf6a9d4d9456c24dd6353c2b1',
+        'format': 'iframe',
+        'height': 60,
+        'width': 468,
+        'params': {}
+    };
+    
+    // ============================================================
+    // CONFIGURAÇÕES DO APP
+    // ============================================================
+    
+    const VALOR_POR_ANUNCIO = 0.10; // R$0,10 por anúncio assistido
     const VALOR_MINIMO_SAQUE = 5.00;
     
     let USUARIO_ATUAL = null;
@@ -86,7 +145,6 @@
         revenue: 0,
         historicoDiario: []
     };
-    let filtroDias = 7;
     
     // ============================================================
     // BANCO DE DADOS IndexedDB
@@ -94,7 +152,7 @@
     
     function abrirDB() {
         return new Promise((resolve, reject) => {
-            const request = indexedDB.open('MoneyAdsDB', 4);
+            const request = indexedDB.open('MoneyAdsDB', 5);
             request.onerror = () => reject(request.error);
             request.onsuccess = () => {
                 db = request.result;
@@ -264,7 +322,6 @@
         }
     }
     
-    // Registrar métrica diária
     function registrarMetrica(tipo) {
         const hoje = new Date().toISOString().split('T')[0];
         let dia = METRICAS.historicoDiario.find(d => d.data === hoje);
@@ -276,108 +333,140 @@
         if (tipo === 'impression') {
             dia.impressions++;
             METRICAS.impressions++;
-            METRICAS.revenue += 0.02; // CPM aproximado de $2
+            METRICAS.revenue += 0.02;
         } else if (tipo === 'click') {
             dia.clicks++;
             METRICAS.clicks++;
         }
         
-        // Calcular revenue com base no CPM (aproximado)
         METRICAS.revenue = METRICAS.impressions * 0.002;
-        
         salvarMetricas();
     }
     
     // ============================================================
-    // ADSTERRA - ANÚNCIOS REAIS
+    // EXIBIR ANÚNCIO COM SEUS CÓDIGOS
     // ============================================================
     
     let anuncioAtivo = false;
     
-    function exibirAnuncioAdsterra() {
+    function assistirAnuncio() {
         if (anuncioAtivo) {
-            alert('Já tem um anúncio sendo exibido!');
+            alert('Já tem um anúncio sendo exibido! Complete-o primeiro.');
             return;
         }
         
         anuncioAtivo = true;
         registrarMetrica('impression');
         
-        // Criar modal com anúncio Adsterra (Interstitial)
+        // Criar modal com todos os seus anúncios
         const modalHtml = `
             <div class="modal" id="anuncioModal">
                 <div class="modal-content">
-                    <h3>📺 Anúncio em Parceria</h3>
-                    <div id="adsterra-container" style="min-height: 250px; margin: 15px 0;">
-                        <div style="text-align: center; padding: 20px;">
-                            <div style="font-size: 50px;">🎬</div>
-                            <p style="margin: 10px 0;">Carregando anúncio...</p>
-                            <div class="aviso">💰 Você ganhará R$ ${VALOR_POR_ANUNCIO.toFixed(2)} após assistir</div>
-                            <div id="timerAnuncio" style="margin-top: 15px; font-size: 14px; color: #ffd700;">⏳ Aguarde 5 segundos</div>
-                        </div>
+                    <h3>📺 Anúncio em Andamento</h3>
+                    <div class="timer-circle" id="timerCircle">10</div>
+                    <div id="timerText" style="margin-bottom: 15px;">Assista o anúncio completo</div>
+                    
+                    <!-- SEUS ANÚNCIOS INTEGRADOS -->
+                    <div id="container-f133ca3c947a6a58ef247933ba24fcc1"></div>
+                    
+                    <div class="ad-container">
+                        <div id="highperformance-468x60"></div>
+                        <div id="highperformance-300x250"></div>
+                        <div id="highperformance-160x600"></div>
+                        <div id="highperformance-160x300"></div>
+                        <div id="highperformance-320x50"></div>
+                        <div id="highperformance-728x90"></div>
                     </div>
-                    <button class="btn-fechar" id="fecharAnuncioBtn" disabled style="opacity: 0.5;">Aguardando...</button>
+                    
+                    <div class="aviso" style="margin-top: 10px;">
+                        💰 Você ganhará R$ ${VALOR_POR_ANUNCIO.toFixed(2)} após 10 segundos
+                    </div>
+                    <button class="btn-fechar" id="btnFecharAnuncio" disabled style="opacity: 0.5;">Aguardando...</button>
                 </div>
             </div>
         `;
         
         document.body.insertAdjacentHTML('beforeend', modalHtml);
         
-        // Script do Adsterra
-        const adContainer = document.getElementById('adsterra-container');
-        if (adContainer) {
-            // Banner do Adsterra (forma de monetização)
-            const adScript = document.createElement('script');
-            adScript.type = 'text/javascript';
-            adScript.src = '//pl25493448.profitablecpmrate.com/9c/8a/df/9c8adf3b5f2e1c8d4e7a9f3b6d2e1c8a.js';
-            adScript.async = true;
-            adContainer.appendChild(adScript);
+        // Recriar os containers de anúncio com os scripts
+        setTimeout(() => {
+            // Configuração dos anúncios HighPerformanceFormat
+            const configs = [
+                { key: '7af4a01bf6a9d4d9456c24dd6353c2b1', container: 'highperformance-468x60' },
+                { key: '534d8a894d172b3dfce040e7427813b4', container: 'highperformance-300x250' },
+                { key: 'fff7a36c088dd5b47badfd20122227c6', container: 'highperformance-160x600' },
+                { key: 'e2528a1d355b10b68860b8cdbcef6778', container: 'highperformance-160x300' },
+                { key: 'abcaa532d3cf68d02df8324ba88e8c3a', container: 'highperformance-320x50' },
+                { key: '2093eb5d6b44dffa2047de2821a66b9c', container: 'highperformance-728x90' }
+            ];
             
-            // Link alternativo para clique
-            const adLink = document.createElement('div');
-            adLink.innerHTML = '<a href="https://www.profitablecpmrate.com/2s0h6hx4?key=8c4d9e7f3a2b1c5d6e7f8a9b0c1d2e3f" target="_blank" style="display: block; background: linear-gradient(135deg, #667eea, #764ba2); padding: 12px; border-radius: 10px; text-decoration: none; color: white; margin-top: 10px;">✨ Clique e Ganhe Mais ✨</a>';
-            adContainer.appendChild(adLink);
-            
-            adLink.onclick = () => {
-                registrarMetrica('click');
-            };
-        }
+            configs.forEach(config => {
+                const container = document.getElementById(config.container);
+                if (container) {
+                    const script = document.createElement('script');
+                    script.innerHTML = `
+                        atOptions = {
+                            'key': '${config.key}',
+                            'format': 'iframe',
+                            'height': ${config.container.includes('468') ? 60 : config.container.includes('300') ? 250 : config.container.includes('160x600') ? 600 : config.container.includes('160x300') ? 300 : config.container.includes('320') ? 50 : 90},
+                            'width': ${config.container.includes('468') ? 468 : config.container.includes('300') ? 300 : config.container.includes('160x600') ? 160 : config.container.includes('160x300') ? 160 : config.container.includes('320') ? 320 : 728},
+                            'params': {}
+                        };
+                    `;
+                    container.appendChild(script);
+                    
+                    const invokeScript = document.createElement('script');
+                    invokeScript.src = `https://www.highperformanceformat.com/${config.key}/invoke.js`;
+                    container.appendChild(invokeScript);
+                }
+            });
+        }, 100);
         
+        // Timer de 10 segundos
         let segundos = 0;
+        const timerCircle = document.getElementById('timerCircle');
+        const timerText = document.getElementById('timerText');
+        
         const timer = setInterval(() => {
             segundos++;
-            const timerDiv = document.getElementById('timerAnuncio');
-            const btnFechar = document.getElementById('fecharAnuncioBtn');
-            if (timerDiv) timerDiv.textContent = `⏳ ${segundos}s / 5s`;
+            const restante = 10 - segundos;
             
-            if (segundos >= 5) {
+            if (timerCircle) timerCircle.textContent = restante;
+            if (timerText) timerText.textContent = `⏳ Aguarde ${restante} segundos...`;
+            
+            if (segundos >= 10) {
                 clearInterval(timer);
+                if (timerCircle) timerCircle.textContent = '✅';
+                if (timerText) timerText.textContent = 'Anúncio concluído!';
+                
+                const btnFechar = document.getElementById('btnFecharAnuncio');
                 if (btnFechar) {
                     btnFechar.disabled = false;
                     btnFechar.style.opacity = '1';
-                    btnFechar.textContent = '✅ Receber Recompensa';
+                    btnFechar.textContent = '💰 RECEBER RECOMPENSA';
                     btnFechar.onclick = () => {
+                        ganharRecompensa();
                         fecharModal();
-                        adicionarGanho(VALOR_POR_ANUNCIO);
-                        alert(`✅ Você ganhou R$ ${VALOR_POR_ANUNCIO.toFixed(2)}!`);
-                        anuncioAtivo = false;
                     };
                 }
             }
         }, 1000);
     }
     
-    async function adicionarGanho(valor) {
+    async function ganharRecompensa() {
         if (!USUARIO_ATUAL) return;
-        const novoSaldo = USUARIO_ATUAL.saldo + valor;
+        
+        const novoSaldo = USUARIO_ATUAL.saldo + VALOR_POR_ANUNCIO;
         await atualizarSaldo(USUARIO_ATUAL.id, novoSaldo);
+        
         HISTORICO.unshift({
             usuarioId: USUARIO_ATUAL.id,
             tipo: 'anuncio',
-            valor: valor,
+            valor: VALOR_POR_ANUNCIO,
             data: new Date().toISOString()
         });
         await salvarHistorico();
+        
         renderizarConteudo();
         
         const saldoEl = document.getElementById('saldoValor');
@@ -385,18 +474,22 @@
             saldoEl.classList.add('pulse');
             setTimeout(() => saldoEl.classList.remove('pulse'), 500);
         }
-        return novoSaldo;
+        
+        alert(`✅ Você ganhou R$ ${VALOR_POR_ANUNCIO.toFixed(2)}!`);
+        anuncioAtivo = false;
+    }
+    
+    function fecharModal() {
+        const modal = document.querySelector('.modal');
+        if (modal) modal.remove();
+        anuncioAtivo = false;
     }
     
     // ============================================================
-    // SAQUE VIA PIX (Backend Mercado Pago)
+    // SAQUE VIA PIX
     // ============================================================
     
-    const BACKEND_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-        ? 'http://localhost:3000' 
-        : 'https://seu-backend.onrender.com'; // Substitua pelo seu backend real
-    
-    async function abrirModalSaque() {
+    function abrirModalSaque() {
         if (USUARIO_ATUAL.saldo < VALOR_MINIMO_SAQUE) {
             alert(`❌ Saldo mínimo para saque: R$ ${VALOR_MINIMO_SAQUE.toFixed(2)}\nSeu saldo: R$ ${USUARIO_ATUAL.saldo.toFixed(2)}`);
             return;
@@ -412,7 +505,6 @@
                     <input type="text" id="nomeTitular" class="saque-input" placeholder="Seu nome completo">
                     <button class="btn-sacar" id="confirmarSaqueBtn">📤 Solicitar Saque</button>
                     <button class="login-btn btn-fechar" onclick="fecharModal()">Cancelar</button>
-                    <div id="pixQRCode" style="margin-top: 15px;"></div>
                 </div>
             </div>
         `;
@@ -445,185 +537,28 @@
                 return;
             }
             
-            // Tentar criar PIX via backend
-            try {
-                const response = await fetch(`${BACKEND_URL}/api/criar-pix`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        valor: valor,
-                        nome: nome,
-                        email: USUARIO_ATUAL.email,
-                        descricao: `Saque MoneyAds - ${USUARIO_ATUAL.nome}`
-                    })
-                });
-                
-                const data = await response.json();
-                
-                if (data.success && data.qrCodeBase64) {
-                    // Mostrar QR Code
-                    const qrDiv = document.getElementById('pixQRCode');
-                    qrDiv.innerHTML = `
-                        <div style="background: white; border-radius: 10px; padding: 10px; margin-top: 10px;">
-                            <img src="data:image/png;base64,${data.qrCodeBase64}" style="width: 200px; height: 200px;">
-                            <p style="color: #333; font-size: 11px; margin-top: 5px;">Escaneie o QR Code para pagar</p>
-                        </div>
-                        <div class="aviso" style="margin-top: 10px;">⏳ Após o pagamento, seu saldo será atualizado</div>
-                    `;
-                    
-                    // Aguardar confirmação do pagamento
-                    verificarPagamento(data.paymentId, valor);
-                } else {
-                    throw new Error('Erro ao gerar PIX');
-                }
-            } catch (error) {
-                console.error('Erro PIX:', error);
-                alert('❌ Modo offline: Saque registrado manualmente. O valor será creditado em até 24h.');
-                processarSaqueManual(valor, chave, nome);
-            }
+            const novoSaldo = USUARIO_ATUAL.saldo - valor;
+            await atualizarSaldo(USUARIO_ATUAL.id, novoSaldo);
+            
+            HISTORICO.unshift({
+                usuarioId: USUARIO_ATUAL.id,
+                tipo: 'saque',
+                valor: -valor,
+                chavePix: chave,
+                nomeTitular: nome,
+                status: 'pendente',
+                data: new Date().toISOString()
+            });
+            await salvarHistorico();
+            
+            fecharModal();
+            renderizarConteudo();
+            
+            alert(`✅ Saque solicitado com sucesso!\n\n📌 Valor: R$ ${valor.toFixed(2)}\n📌 Chave PIX: ${chave}\n\n⏳ O valor será enviado para sua conta em até 24h.`);
+            
+            // Notificação para você (dono do app)
+            console.log(`🔔 NOVO SAQUE: ${nome} - R$ ${valor} - PIX: ${chave}`);
         };
-    }
-    
-    async function verificarPagamento(paymentId, valor) {
-        let tentativas = 0;
-        const interval = setInterval(async () => {
-            tentativas++;
-            try {
-                const response = await fetch(`${BACKEND_URL}/api/status-pagamento/${paymentId}`);
-                const status = await response.json();
-                
-                if (status.status === 'approved') {
-                    clearInterval(interval);
-                    processarSaqueManual(valor, null, null, true);
-                } else if (tentativas > 30) {
-                    clearInterval(interval);
-                    alert('⏳ Pagamento não confirmado. O saque será processado manualmente.');
-                    processarSaqueManual(valor, null, null);
-                }
-            } catch (error) {
-                console.error('Erro ao verificar pagamento:', error);
-            }
-        }, 3000);
-    }
-    
-    async function processarSaqueManual(valor, chave, nome, pagoOnline = false) {
-        const novoSaldo = USUARIO_ATUAL.saldo - valor;
-        await atualizarSaldo(USUARIO_ATUAL.id, novoSaldo);
-        
-        HISTORICO.unshift({
-            usuarioId: USUARIO_ATUAL.id,
-            tipo: 'saque',
-            valor: -valor,
-            chavePix: chave || 'Pagamento via PIX Online',
-            nomeTitular: nome || USUARIO_ATUAL.nome,
-            status: pagoOnline ? 'aprovado' : 'pendente',
-            data: new Date().toISOString()
-        });
-        await salvarHistorico();
-        
-        fecharModal();
-        renderizarConteudo();
-        
-        if (pagoOnline) {
-            alert(`✅ Pagamento confirmado! R$ ${valor.toFixed(2)} foi debitado da sua conta.`);
-        } else {
-            alert(`✅ Saque solicitado com sucesso!\n\n📌 Valor: R$ ${valor.toFixed(2)}\n\n⏳ O valor será enviado para sua conta em até 24h.`);
-        }
-    }
-    
-    // ============================================================
-    // RELATÓRIO DE MÉTRICAS
-    // ============================================================
-    
-    function calcularMetricas(dias) {
-        const hoje = new Date();
-        const dataLimite = new Date();
-        dataLimite.setDate(hoje.getDate() - dias);
-        
-        let impressionsFiltradas = 0;
-        let clicksFiltrados = 0;
-        let revenueFiltrada = 0;
-        
-        const dadosDiarios = [];
-        
-        for (let i = dias - 1; i >= 0; i--) {
-            const data = new Date();
-            data.setDate(hoje.getDate() - i);
-            const dataStr = data.toISOString().split('T')[0];
-            const dia = METRICAS.historicoDiario.find(d => d.data === dataStr);
-            
-            if (dia) {
-                impressionsFiltradas += dia.impressions;
-                clicksFiltrados += dia.clicks;
-                revenueFiltrada += dia.revenue;
-                dadosDiarios.push(dia);
-            } else {
-                dadosDiarios.push({ data: dataStr, impressions: 0, clicks: 0, revenue: 0 });
-            }
-        }
-        
-        const ctr = impressionsFiltradas > 0 ? (clicksFiltrados / impressionsFiltradas * 100).toFixed(2) : 0;
-        const cpm = impressionsFiltradas > 0 ? (revenueFiltrada / impressionsFiltradas * 1000).toFixed(2) : 0;
-        
-        return { impressions: impressionsFiltradas, clicks: clicksFiltrados, ctr, cpm, revenue: revenueFiltrada, dadosDiarios };
-    }
-    
-    function renderizarRelatorio() {
-        const metricas = calcularMetricas(filtroDias);
-        const maxImpressions = Math.max(...metricas.dadosDiarios.map(d => d.impressions), 1);
-        
-        return `
-            <div class="filter-bar">
-                <button class="filter-btn ${filtroDias === 7 ? 'active' : ''}" onclick="mudarFiltro(7)">Últimos 7 dias</button>
-                <button class="filter-btn ${filtroDias === 15 ? 'active' : ''}" onclick="mudarFiltro(15)">Últimos 15 dias</button>
-                <button class="filter-btn ${filtroDias === 30 ? 'active' : ''}" onclick="mudarFiltro(30)">Últimos 30 dias</button>
-            </div>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value">${metricas.impressions}</div>
-                    <div class="stat-label">Impressões</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">${metricas.clicks}</div>
-                    <div class="stat-label">Cliques</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">${metricas.ctr}%</div>
-                    <div class="stat-label">CTR</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">R$ ${metricas.cpm}</div>
-                    <div class="stat-label">CPM</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">R$ ${metricas.revenue.toFixed(2)}</div>
-                    <div class="stat-label">Receita Total</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">R$ ${USUARIO_ATUAL.saldo.toFixed(2)}</div>
-                    <div class="stat-label">Seu Saldo</div>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <h4 style="margin-bottom: 15px;">📊 Impressões por Dia</h4>
-                <div class="chart-bars">
-                    ${metricas.dadosDiarios.map(dia => `
-                        <div class="chart-bar">
-                            <div class="bar" style="height: ${(dia.impressions / maxImpressions) * 100}px;"></div>
-                            <div style="font-size: 10px;">${dia.data.substring(5)}</div>
-                            <div style="font-size: 9px; color: #ffd700;">${dia.impressions}</div>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-        `;
-    }
-    
-    function mudarFiltro(dias) {
-        filtroDias = dias;
-        renderizarConteudo();
     }
     
     // ============================================================
@@ -684,11 +619,6 @@
         renderizarApp();
     }
     
-    function fecharModal() {
-        document.querySelectorAll('.modal').forEach(m => m.remove());
-        anuncioAtivo = false;
-    }
-    
     // ============================================================
     // RENDERIZAÇÃO
     // ============================================================
@@ -716,14 +646,24 @@
                     <div style="font-size: 50px;">🎬</div>
                     <div style="margin: 10px 0;">Clique no botão abaixo</div>
                     <div class="ganho">💰 + ${formatarMoeda(VALOR_POR_ANUNCIO)} por anúncio</div>
+                    <div style="font-size: 12px; color: #aaa; margin-top: 10px;">⏱️ Anúncio de 10 segundos</div>
                 </div>
-                <button class="btn-anuncio" onclick="exibirAnuncioAdsterra()">📺 ASSISTIR ANÚNCIO AGORA</button>
-                <div class="aviso" style="margin-top: 15px;">💡 Anúncios reais do Adsterra. Você ganha dinheiro real!</div>
+                <button class="btn-anuncio" onclick="assistirAnuncio()">
+                    🎬 ASSISTIR ANÚNCIO AGORA
+                </button>
+                <div class="aviso" style="margin-top: 15px;">
+                    💡 Anúncios reais das redes: Effective CPM Network e HighPerformanceFormat
+                </div>
             </div>
             
             <div class="card">
-                <h3>📊 Métricas de Anúncios</h3>
-                ${renderizarRelatorio()}
+                <h3>📊 Estatísticas</h3>
+                <div style="margin-top: 15px;">
+                    <div>💰 Saldo atual: ${formatarMoeda(USUARIO_ATUAL.saldo)}</div>
+                    <div>🎯 Mínimo para saque: ${formatarMoeda(VALOR_MINIMO_SAQUE)}</div>
+                    <div>📈 Status: ${USUARIO_ATUAL.saldo >= VALOR_MINIMO_SAQUE ? '✅ Disponível para saque' : '⏳ Continue assistindo'}</div>
+                    <div>👥 Total de anúncios assistidos: ${HISTORICO.filter(h => h.usuarioId === USUARIO_ATUAL.id && h.tipo === 'anuncio').length}</div>
+                </div>
             </div>
         `;
     }
@@ -746,6 +686,7 @@
                     <div>💰 Saldo atual: ${formatarMoeda(USUARIO_ATUAL.saldo)}</div>
                     <div>📈 Total ganho: +${formatarMoeda(totalGanho)}</div>
                     <div>💸 Total sacado: -${formatarMoeda(totalSaque)}</div>
+                    <div>🎬 Anúncios assistidos: ${historico.filter(h => h.tipo === 'anuncio').length}</div>
                 </div>
             </div>
             
@@ -753,7 +694,8 @@
                 <h3>💰 Saque via PIX</h3>
                 <div class="aviso">
                     💡 Mínimo: ${formatarMoeda(VALOR_MINIMO_SAQUE)}<br>
-                    Seu saldo: ${formatarMoeda(USUARIO_ATUAL.saldo)}
+                    Seu saldo: ${formatarMoeda(USUARIO_ATUAL.saldo)}<br>
+                    💳 Saque 100% via PIX
                 </div>
                 <button class="btn-sacar ${USUARIO_ATUAL.saldo < VALOR_MINIMO_SAQUE ? 'btn-desabilitado' : ''}" 
                         onclick="abrirModalSaque()" 
@@ -855,10 +797,6 @@
                     <div class="nav-label">Início</div>
                 </div>
                 <div class="nav-item ${ABA_ATUAL === 'perfil' ? 'active' : ''}" data-tab="perfil" onclick="mudarAba('perfil')">
-                    <div class="nav-icon">📊</div>
-                    <div class="nav-label">Estatísticas</div>
-                </div>
-                <div class="nav-item ${ABA_ATUAL === 'conta' ? 'active' : ''}" data-tab="conta" onclick="mudarAba('conta')">
                     <div class="nav-icon">👤</div>
                     <div class="nav-label">Perfil</div>
                 </div>
@@ -869,22 +807,21 @@
     }
     
     // ============================================================
-    // EXPOR FUNÇÕES
+    // EXPOR FUNÇÕES GLOBAIS
     // ============================================================
     
     window.fazerLogin = fazerLogin;
     window.registrar = registrar;
     window.telaLogin = telaLogin;
     window.telaRegistro = telaRegistro;
-    window.exibirAnuncioAdsterra = exibirAnuncioAdsterra;
+    window.assistirAnuncio = assistirAnuncio;
     window.abrirModalSaque = abrirModalSaque;
     window.mudarAba = mudarAba;
     window.logout = logout;
     window.fecharModal = fecharModal;
-    window.mudarFiltro = mudarFiltro;
     
     // ============================================================
-    // INICIAR
+    // INICIAR APLICAÇÃO
     // ============================================================
     
     async function iniciar() {
@@ -894,8 +831,10 @@
             await carregarHistorico();
             await carregarMetricas();
             await carregarSessao();
+            carregarScriptsAnuncio(); // Carrega todos os seus scripts de anúncio
             renderizarApp();
-            console.log('🚀 MoneyAds iniciado com métricas e Adsterra!');
+            console.log('🚀 MoneyAds iniciado com TODOS os seus códigos de anúncio!');
+            console.log('💰 Agora você vai ganhar dinheiro com Effective CPM Network e HighPerformanceFormat!');
         } catch (error) {
             console.error('Erro:', error);
             document.getElementById('app').innerHTML = '<div style="text-align:center; padding:50px; color:white;">❌ Erro ao carregar. Recarregue a página.</div>';
